@@ -1,17 +1,25 @@
 #include <iostream>
+#include <string>
+#include <vector>
+
 #include <boost/program_options.hpp>
+
+void buildCompiler(const std::string & path) {}
+
+void testCompiler(const std::vector<std::string> & phases, std::size_t threadNum) {}
 
 int main(int argc, char ** argv) {
     namespace po = boost::program_options;
 
     po::options_description build("build options");
-    build.add_options()("path/to/build.bash", po::value<std::string>());
+    build.add_options()
+        ("path", po::value<std::string>(), "path/to/build.bash");
 
     std::size_t threadNum;
     po::options_description test("test options");
     test.add_options()
         ("all,A", "test all test cases")
-        ("case", po::value<std::string>(), "arg = semantic/codegen/optim")
+        ("phase", po::value<std::string>(), "arg = semantic/codegen/optim")
         ("thread,j", po::value<std::size_t>(&threadNum)->default_value(1))
         ;
 
@@ -27,6 +35,26 @@ int main(int argc, char ** argv) {
         std::cout << desc;
         return 0;
     }
+    if (vm.count("tool")) {
+        if (vm.count("build")) {
+            if (!vm.count("path")) {
+                std::cout << "path/to/build.bash is required.";
+                return 0;
+            }
+            buildCompiler(vm["path"].as<std::string>());
+            return 0;
+        }
+        if (vm.count("test")) {
+            if (vm.count("all")) {
+                testCompiler({"semantic", "codegen", "optim"}, threadNum);
+                return 0;
+            }
+            if (vm.count("phase")) {
+                testCompiler({vm["phase"].as<std::string>()}, threadNum);
+                return 0;
+            }
+        }
+    }
 
-    return 0;
+    return 1;
 }
