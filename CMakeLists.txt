@@ -8,7 +8,7 @@ add_executable(${PROJECT_NAME} ${SOURCE})
 
 set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost REQUIRED
-        COMPONENTS thread
+        COMPONENTS thread program_options
         )
 include_directories(${Boost_INCLUDE_DIR})
 
