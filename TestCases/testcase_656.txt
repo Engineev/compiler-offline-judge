@@ -1,0 +1,37 @@
+class A {
+    int x;
+    int y;
+    int z;
+}
+
+B f() {
+    int a;
+    a = 1;
+}
+
+int main() {
+    return 0;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+test missing return-func-1-5100379071-puyouer.mx
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

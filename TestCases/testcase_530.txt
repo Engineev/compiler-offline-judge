@@ -1,0 +1,115 @@
+class Edge{
+    int to;
+    int next;
+}
+
+Edge[] e;
+int ne = 0;
+int n = 0;
+int[] head;
+int ans = 0;
+int size = 0;
+int i = 0;
+
+void add(int from, int to){
+    ++ne;
+    e[ne].to = to;
+    e[ne].next = head[from];
+    head[from] = ne;
+}
+
+bool[] visit;
+int[] son;
+int[] maxson;
+
+void init(){
+    e = new Edge[100];
+    ne = 0;
+    ans = 0;
+    size = n;
+    visit = new bool[100];
+    son = new int[100];
+    maxson = new int[100];
+    head = new int[100];
+    for (i = 0; i <= n; ++ i){
+        visit[i] = false;
+        son[i] = 0;
+        maxson[i] = 0;
+        head[i] = 0;
+    }
+}
+
+int max(int a, int b){
+    if (a > b) return a;
+    else return b;
+}
+
+void dfs(int u){
+    int tmp = 0;
+    visit[u] = true;
+    int i;
+    for (i = head[u]; i != 0; i = e[i].next){
+        int v = e[i].to;
+        if (visit[v]==false) {
+            dfs(v);
+            son[u] = son[u] + (son[v] + 1);
+            tmp = max(tmp, son[v] + 1);
+        }
+    }
+    tmp = max(tmp, n - son[u] - 1);
+    if (tmp < size || (tmp == size && u < ans)){
+       ans = u;
+       size = tmp;
+       }
+}
+
+int main(){
+    int t;
+    t = getInt();
+    while((t--) != 0){
+        n = getInt();
+        init();
+        for (i = 0; i < n-1; ++i){
+            int u;
+            int v;
+            u = getInt();
+            v = getInt();
+            add(u,v);
+            add(v,u);
+        }
+        dfs(1);
+        println(toString(ans));
+        println(toString(size));
+    }
+
+
+    return 0;
+}
+
+
+/*!! metadata:
+=== comment ===
+dfs-515021910153-sshengpeiyao.txt
+=== input ===
+1
+7
+2 6
+1 2
+1 4
+4 5
+3 7
+3 1
+=== assert ===
+output
+=== timeout ===
+1.0
+=== output ===
+1
+2
+=== phase ===
+codegen extended
+=== is_public ===
+True
+
+!!*/
+

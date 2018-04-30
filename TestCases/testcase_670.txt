@@ -1,0 +1,34 @@
+class A {
+    int a;
+}
+
+int main() {
+    A a = new A;
+    A b = new A;
+    A c = new A;
+    c = a + b;
+    return 0;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+test binary operation-1-5100379071-puyouer.mx
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

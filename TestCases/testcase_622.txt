@@ -1,0 +1,22 @@
+A f(A x)
+{
+	return A.this;
+}
+int main()
+{
+	return 0;
+}
+
+
+/*!! metadata:
+=== comment ===
+5140309234-xietiancheng/function2.txt
+=== assert ===
+failure_compile
+=== phase ===
+semantic pretest
+=== is_public ===
+True
+
+!!*/
+

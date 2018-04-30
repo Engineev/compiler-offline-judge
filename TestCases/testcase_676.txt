@@ -1,0 +1,26 @@
+int main() {
+    null = 2016;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+test assign operation-asiop-4-5120309049-liaochao.mx
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

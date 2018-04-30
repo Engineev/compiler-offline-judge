@@ -1,0 +1,21 @@
+int main()
+{
+	void a;
+	void b;
+	a = b;
+	return 0;
+}
+
+
+/*!! metadata:
+=== comment ===
+5140309234-xietiancheng/typeCheck3.txt
+=== assert ===
+failure_compile
+=== phase ===
+semantic pretest
+=== is_public ===
+True
+
+!!*/
+

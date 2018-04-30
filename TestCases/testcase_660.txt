@@ -1,0 +1,27 @@
+int main() {
+    continue;
+    return 0;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+Test control tokens-ctrflow-2-5120309049-liaochao.mx
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

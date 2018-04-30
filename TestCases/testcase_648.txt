@@ -1,0 +1,36 @@
+class AI {
+    int a;
+}
+
+int f(int a, int b)
+{
+}
+
+int main() {
+    int b;
+    AI sa = new AI;
+    f(b, sa);
+}
+
+
+
+/*!! metadata:
+=== comment ===
+Test missing return-func-5-5100309127-hetianxing.mx
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

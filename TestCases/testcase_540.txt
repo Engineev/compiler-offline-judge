@@ -1,0 +1,49 @@
+int ans;
+int n;
+int get(int x) {
+	if(x == ans || x == 1) {
+		return ans;
+	}
+	if((x & 1) == 1) {
+		return get(x - 1);
+	}
+	else {
+		return get(x - 1);
+	}
+	return 1;
+}
+int main()
+{
+	n = getInt();
+	ans = 1;
+	int i = 1;
+	for(i = 1; i <= n; i++)
+	{
+		ans = (ans & get(i));
+	}
+	return ans;
+}
+
+
+
+
+
+/*!! metadata:
+=== comment ===
+codegen-515030910626-kongbingyu.txt
+return 1
+=== assert ===
+exitcode
+=== timeout ===
+1.0
+=== input ===
+100
+=== phase ===
+codegen extended
+=== is_public ===
+True
+=== exitcode ===
+1
+
+!!*/
+

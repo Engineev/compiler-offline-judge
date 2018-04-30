@@ -1,0 +1,35 @@
+class A {
+  B() {}
+}
+
+class B {
+  A() {}
+}
+
+int main() {
+  A b = new A;
+  B a = new B;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+Test constructor-noname-515030910642-chenxinhao.txt
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic extended
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

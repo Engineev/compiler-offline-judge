@@ -1,0 +1,23 @@
+int main( ) {
+     int a;
+     int b;
+     a = 0; b = 0;
+     return a + b;
+}
+
+
+
+
+/*!! metadata:
+=== comment ===
+noname-515030910648-yangzhuolin.txt
+test return value
+=== assert ===
+success_compile
+=== phase ===
+semantic extended
+=== is_public ===
+True
+
+!!*/
+
