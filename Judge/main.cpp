@@ -4,7 +4,9 @@
 
 #include <boost/program_options.hpp>
 
-void buildCompiler(const std::string & path) {}
+#include "Build.h"
+
+void buildCompiler(const std::string & path);
 
 void testCompiler(const std::vector<std::string> & phases, std::size_t threadNum) {}
 
@@ -26,7 +28,7 @@ int main(int argc, char ** argv) {
     po::options_description desc("Allowed options");
     desc.add_options()
         ("help,h", "produce this message")
-        ("tool,T", "arg = build/test");
+        ("tool", po::value<std::string>(), "arg = build/test");
     desc.add(build).add(test);
 
     po::variables_map vm;
@@ -36,7 +38,7 @@ int main(int argc, char ** argv) {
         return 0;
     }
     if (vm.count("tool")) {
-        if (vm.count("build")) {
+        if (vm["tool"].as<std::string>() == "build") {
             if (!vm.count("path")) {
                 std::cout << "path/to/build.bash is required.";
                 return 0;
@@ -44,7 +46,7 @@ int main(int argc, char ** argv) {
             buildCompiler(vm["path"].as<std::string>());
             return 0;
         }
-        if (vm.count("test")) {
+        if (vm["tool"].as<std::string>() == "test") {
             if (vm.count("all")) {
                 testCompiler({"semantic", "codegen", "optim"}, threadNum);
                 return 0;
@@ -57,4 +59,8 @@ int main(int argc, char ** argv) {
     }
 
     return 1;
+}
+
+void buildCompiler(const std::string &path) {
+    sjtu::build(path);
 }

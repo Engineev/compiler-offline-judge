@@ -6,6 +6,8 @@ project(compiler-oj)
 
 file(GLOB_RECURSE SOURCE ${CMAKE_SOURCE_DIR}/Judge/*.cpp *.h)
 
+add_definitions(-D CMAKE_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
+
 add_executable(${PROJECT_NAME} ${SOURCE})
 
 set(Boost_USE_STATIC_LIBS ON)
