@@ -1,13 +1,14 @@
 #ifndef COMPILER_OJ_TESTCASE_H
 #define COMPILER_OJ_TESTCASE_H
 
+#include <fstream>
 #include <string>
 #include <utility>
 #include <exception>
 
 namespace sjtu {
 
-enum class TestCasePhase {
+enum class [[deprecated]] TestCasePhase {
     SemanticPretest = 0, SemanticExtended,
     CodegenPretest, CodegenExtended,
     OptimPretest, OptimExtended,
@@ -27,7 +28,7 @@ struct TestCase {
     AssertionType assertion = AssertionType::Error;
     std::uint64_t timeout = 0; // ms
     int exitcode = 0;
-    TestCasePhase phase = TestCasePhase::Error;
+    std::string phase;
 
     TestCase() = default;
     TestCase(const TestCase &) = default;
@@ -45,13 +46,12 @@ struct InvalidTestCase : public std::exception {};
 
 using CIter = std::string::const_iterator;
 
-TestCase parse(const std::string & dir);
+TestCase parse(std::ifstream & fin);
 
 std::pair<CIter, CIter> findBlock(const std::string & buffer, const std::string & name);;
 
 std::string readSource(const std::string & buffer);
 
-std::string readComment(const std::string & buffer);
 
 } /* namespace sjtu */
 

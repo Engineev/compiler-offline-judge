@@ -3,6 +3,7 @@
 #include <vector>
 
 #include <boost/program_options.hpp>
+#include <boost/filesystem.hpp>
 
 #include "Build.h"
 #include "TestCase.h"
@@ -11,15 +12,7 @@ void buildCompiler(const std::string & path);
 
 void testCompiler(const std::vector<std::string> & phases, std::size_t threadNum);
 
-std::vector<sjtu::TestCase> collectTestCases(const std::string & phase, const std::string & dir) {
-    // TODO: collect
-    auto tmp = sjtu::parse(dir + "testcase_513.txt");
-    std::cout << tmp.src << "\n==========================\n";
-    std::cout << tmp.comment << "\n=======================\n";
-    std::cout << tmp.input << "\n===============\n";
-    std::cout << tmp.output << "\n=============\n";
-    return {};
-}
+std::vector<sjtu::TestCase> collectTestCases(const std::string & phase, const std::string & dir);
 
 int main(int argc, char ** argv) {
     namespace po = boost::program_options;
@@ -84,4 +77,22 @@ void buildCompiler(const std::string &path) {
 }
 
 void testCompiler(const std::vector<std::string> &phases, std::size_t threadNum) {}
+
+std::vector<sjtu::TestCase> collectTestCases(const std::string &phase, const std::string &dir_) {
+    namespace fs = boost::filesystem;
+
+    std::vector<sjtu::TestCase> res;
+
+    fs::path dir(dir_);
+
+    for (auto & x : fs::directory_iterator(dir)) {
+//        std::cerr << x.path().string() << std::endl;
+        std::ifstream fin(std::ifstream(x.path().string()));
+        auto testCase = sjtu::parse(fin);
+        if (testCase.phase == phase)
+            res.emplace_back(std::move(testCase));
+    }
+
+    return res;
+}
 

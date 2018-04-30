@@ -9,10 +9,7 @@
 
 namespace sjtu {
 
-TestCase parse(const std::string &dir) {
-    std::ifstream fin(dir);
-    if (!fin.is_open())
-        throw std::ifstream::failure(std::string("file does not exists"));
+TestCase parse(std::ifstream & fin) {
     std::string buffer(static_cast<std::stringstream const &>(std::stringstream() << fin.rdbuf()).str());
 
     TestCase result;
@@ -60,21 +57,22 @@ TestCase parse(const std::string &dir) {
     }
 
     std::tie(beg, end) = findBlock(buffer, "phase");
-    std::string rawPhase(beg, end);
-    if (rawPhase == "semantic pretest")
-        result.phase = TestCasePhase::SemanticPretest;
-    else if (rawPhase == "semantic extended")
-        result.phase = TestCasePhase::SemanticExtended;
-    else if (rawPhase == "codegen pretest")
-        result.phase = TestCasePhase::CodegenPretest;
-    else if (rawPhase == "codegen extended")
-        result.phase = TestCasePhase::CodegenExtended;
-    else if (rawPhase == "optim pretest")
-        result.phase = TestCasePhase::OptimPretest;
-    else if (rawPhase == "optim extended")
-        result.phase = TestCasePhase::OptimExtended;
-    else
-        throw InvalidTestCase();
+    result.phase = std::string(beg, end);
+//    std::string rawPhase(beg, end);
+//    if (rawPhase == "semantic pretest")
+//        result.phase = TestCasePhase::SemanticPretest;
+//    else if (rawPhase == "semantic extended")
+//        result.phase = TestCasePhase::SemanticExtended;
+//    else if (rawPhase == "codegen pretest")
+//        result.phase = TestCasePhase::CodegenPretest;
+//    else if (rawPhase == "codegen extended")
+//        result.phase = TestCasePhase::CodegenExtended;
+//    else if (rawPhase == "optim pretest")
+//        result.phase = TestCasePhase::OptimPretest;
+//    else if (rawPhase == "optim extended")
+//        result.phase = TestCasePhase::OptimExtended;
+//    else
+//        throw InvalidTestCase();
 
     return result;
 }
@@ -93,9 +91,6 @@ std::pair<CIter, CIter> findBlock(const std::string &buffer, const std::string &
         return {buffer.end(), buffer.end()};
     auto beg = m[0].first;
     auto end = m[0].second;
-
-    std::string tmp(beg, end);
-    std::cout << tmp << std::endl;
 
     while (*beg != '\n')
         ++beg;
