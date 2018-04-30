@@ -5,10 +5,21 @@
 #include <boost/program_options.hpp>
 
 #include "Build.h"
+#include "TestCase.h"
 
 void buildCompiler(const std::string & path);
 
-void testCompiler(const std::vector<std::string> & phases, std::size_t threadNum) {}
+void testCompiler(const std::vector<std::string> & phases, std::size_t threadNum);
+
+std::vector<sjtu::TestCase> collectTestCases(const std::string & phase, const std::string & dir) {
+    // TODO: collect
+    auto tmp = sjtu::parse(dir + "testcase_513.txt");
+    std::cout << tmp.src << "\n==========================\n";
+    std::cout << tmp.comment << "\n=======================\n";
+    std::cout << tmp.input << "\n===============\n";
+    std::cout << tmp.output << "\n=============\n";
+    return {};
+}
 
 int main(int argc, char ** argv) {
     namespace po = boost::program_options;
@@ -23,12 +34,13 @@ int main(int argc, char ** argv) {
         ("all,A", "test all test cases")
         ("phase", po::value<std::string>(), "arg = semantic/codegen/optim")
         ("thread,j", po::value<std::size_t>(&threadNum)->default_value(1))
+        ("cases-dir", po::value<std::string>(), "path/to/testcases/")
         ;
 
     po::options_description desc("Allowed options");
     desc.add_options()
         ("help,h", "produce this message")
-        ("tool", po::value<std::string>(), "arg = build/test");
+        ("tool,T", po::value<std::string>(), "arg = build/test");
     desc.add(build).add(test);
 
     po::variables_map vm;
@@ -47,7 +59,13 @@ int main(int argc, char ** argv) {
             return 0;
         }
         if (vm["tool"].as<std::string>() == "test") {
+            if (!vm.count("cases-dir")) {
+                std::cout << "cases-dir is required" << std::endl;
+                return 1;
+            }
+            // TODO: collect test cases
             if (vm.count("all")) {
+                collectTestCases("semantic", vm["cases-dir"].as<std::string>());
                 testCompiler({"semantic", "codegen", "optim"}, threadNum);
                 return 0;
             }
@@ -64,3 +82,6 @@ int main(int argc, char ** argv) {
 void buildCompiler(const std::string &path) {
     sjtu::build(path);
 }
+
+void testCompiler(const std::vector<std::string> &phases, std::size_t threadNum) {}
+
