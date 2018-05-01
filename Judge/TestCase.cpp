@@ -1,11 +1,11 @@
 #include "TestCase.h"
 
+#include <cctype>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <ios>
 #include <regex>
-
 
 namespace sjtu {
 
@@ -85,19 +85,36 @@ std::string readSource(const std::string &buffer) {
 }
 
 std::pair<CIter, CIter> findBlock(const std::string &buffer, const std::string &name) {
-    std::smatch m;
-    if (!std::regex_search(buffer, m,
-                           std::regex("=== " + name + " ===\n(.|\n)*?(===|!!\\*)")))
+    std::string title = "=== " + name + " ===";
+    CIter beg = buffer.end(), end = buffer.end(), iter;
+    for (iter = buffer.begin(); iter < buffer.end() - title.size(); ++iter) {
+        if (std::equal(title.begin(), title.end(), iter)) {
+            beg = iter + title.length();
+            iter = beg;
+            break;
+        }
+    }
+    if (beg == buffer.end())
         return {buffer.end(), buffer.end()};
-    auto beg = m[0].first;
-    auto end = m[0].second;
 
-    while (*beg != '\n')
+    std::string prefix = "===";
+    std::string dataEnd = "!!*";
+    for (; iter < buffer.end() - 3; ++iter) {
+        if (std::equal(prefix.begin(), prefix.end(), iter)
+            || std::equal(dataEnd.begin(), dataEnd.end(), iter)) {
+            end = iter - 1;
+            break;
+        }
+    }
+
+    while (!std::isspace(*beg))
         ++beg;
-    while (*end != '\n')
+//    while (!std::isspace(*end))
+//        --end;
+    while (std::isspace(*beg) && beg != end)
+        ++beg;
+    while (std::isspace(*(end - 1)) && beg != end)
         --end;
-    while (*beg == '\n' && beg != end)
-        ++beg;
     return {beg, end};
 }
 

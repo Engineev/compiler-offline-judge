@@ -69,6 +69,7 @@ int main(int argc, char ** argv) {
         if (vm["tool"].as<std::string>() == "test") {
             if (!checkArg("cases-dir") || !checkArg("bash-dir"))
                 return 1;
+            std::cout << "collecting test cases...\t";
             std::vector<sjtu::TestCase> testcases;
             if (vm.count("all")) {
                 testcases = collectTestCases("semantic", vm["cases-dir"].as<std::string>());
@@ -78,6 +79,7 @@ int main(int argc, char ** argv) {
             if (vm.count("phase")) {
                 auto phase = vm["phase"].as<std::string>();
                 testcases = collectTestCases(phase, vm["cases-dir"].as<std::string>());
+                std::cout << "done." << std::endl;
                 testCompiler(testcases, vm["bash-dir"].as<std::string>(), threadNum);
                 return 0;
             }
@@ -99,6 +101,8 @@ std::vector<sjtu::TestCase> collectTestCases(const std::string &phase, const std
     fs::path dir(dir_);
 
     for (auto & x : fs::directory_iterator(dir)) {
+        if (x.path().extension() != ".txt")
+            continue;
         auto tmp = x.path().string();
 //        std::cerr << x.path().string() << std::endl;
         std::ifstream fin(std::ifstream(x.path().string()));

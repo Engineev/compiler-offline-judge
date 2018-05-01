@@ -11,7 +11,10 @@ namespace sjtu {
 void build(const std::string &path) {
     namespace bp = boost::process;
     namespace fs = boost::filesystem;
-    bp::system(fs::path(path));
+    std::cout << "building...\t";
+    std::cout.flush();
+    bp::system("bash", fs::path(path));
+    std::cout << "done." << std::endl;
 }
 
 
