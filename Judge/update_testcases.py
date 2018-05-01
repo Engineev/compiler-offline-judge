@@ -10,6 +10,7 @@ testcases_url = '/Compiler/testcases'
 testcases_path = '..'
 testcases_subdir = 'TestCases'
 get_disabled_testcases = False
+output_path = ''
 
 def get_text(url):
     try_count = 0
@@ -31,7 +32,7 @@ class TestCaseHTMLParser(HTMLParser):
 
     def get_testcase(self):
         testcase = get_text(oj_root_url + self.testcase_url)
-        out_file = os.path.join(testcases_path, testcases_subdir, self.testcase_url.split('/')[-1])
+        out_file = os.path.join(output_path, self.testcase_url.split('/')[-1])
         with open(out_file, 'w', encoding='utf8') as f:
             f.write(testcase)
 
@@ -73,9 +74,10 @@ def print_help():
     )
 
 def update_testcases():
-    if os.path.exists(testcases_path):
-        shutil.rmtree(testcases_path)
-    os.makedirs(testcases_path) 
+	output_path = os.path.join(testcases_path, testcases_subdir)
+    if os.path.exists(output_path):
+        shutil.rmtree(output_path)
+    os.makedirs(output_path) 
 
     html = get_text(oj_root_url + testcases_url)
     process_html(html)
