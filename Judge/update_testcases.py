@@ -7,7 +7,8 @@ from html.parser import HTMLParser
 
 oj_root_url = 'http://blacko.cn:6002'
 testcases_url = '/Compiler/testcases'
-testcases_path = 'TestCases'
+testcases_path = '..'
+testcases_subdir = 'TestCases'
 get_disabled_testcases = False
 
 def get_text(url):
@@ -30,7 +31,7 @@ class TestCaseHTMLParser(HTMLParser):
 
     def get_testcase(self):
         testcase = get_text(oj_root_url + self.testcase_url)
-        out_file = os.path.join(testcases_path, self.testcase_url.split('/')[-1])
+        out_file = os.path.join(testcases_path, testcases_subdir, self.testcase_url.split('/')[-1])
         with open(out_file, 'w', encoding='utf8') as f:
             f.write(testcase)
 
