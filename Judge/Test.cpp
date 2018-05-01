@@ -32,16 +32,18 @@ std::pair<bool, std::string> testCompile(const TestCase &testCase, const std::st
 
     std::error_code ec;
     bp::opstream in;
+    bp::ipstream err;
 
-    bp::child c(path, ec, bp::std_err > bp::null, bp::std_out > bp::null, bp::std_in < in);
+    bp::child c(path, ec, bp::std_err > err, bp::std_out > bp::null, bp::std_in < in);
     in << testCase.src << std::endl;
     in.pipe().close();
 
     c.wait();
     auto exit = c.exit_code();
+    std::string ceMessage(std::istreambuf_iterator<char>(err), {});
 
-    if (testCase.assertion == AssertionType::SuccessCompile && (bool)ec)
-        return {false, ec.message()};
+    if (testCase.assertion == AssertionType::SuccessCompile && ((bool)ec || exit))
+        return {false, ceMessage};
     if (testCase.assertion == AssertionType::FailureCompile && !(bool)ec && !exit)
         return {false, "The build should failed."};
     return {true, ""};

@@ -120,13 +120,16 @@ void testCompiler(const std::vector<sjtu::TestCase> &testCases,
                   std::size_t threadNum) {
     std::cout << "running " << testCases.size() << " test cases..." << std::endl;
     for (auto & test : testCases) {
-        std::cout << "running " << test.filename << std::endl;
+        std::cout << "\033[96mrunning " << test.filename << "\033[0m\t";
         bool res;
         std::string message;
         std::tie(res, message) = sjtu::test(test, bashDir);
+
         if (!res) {
-            std::cout << test.filename << " has failed.\n"
-                      << "Message = " << message << std::endl;
+            std::cout << "\033[31mFailed. The build should succeed\033[0m\n";
+            std::cout << "\033[31mCE Message =\n" << message << "\033[0m" << std::endl;
+        } else {
+            std::cout << "\033[32mPassed.\033[0m." << std::endl;
         }
     }
 }
