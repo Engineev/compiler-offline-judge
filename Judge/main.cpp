@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include <boost/process.hpp>
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
 
@@ -17,23 +18,27 @@ void testCompiler(const std::vector<sjtu::TestCase> & testCases,
                   const std::string & bashDir,
                   std::size_t threadNum);
 
+void updateTestCases();
+
 int main(int argc, char ** argv) {
     namespace po = boost::program_options;
 
     po::options_description desc("Allowed options");
     desc.add_options()
         ("help,h", "produce this message")
-        ("tool,T", po::value<std::string>(), "arg = build/test")
+        ("tool,T", po::value<std::string>(), "arg = [build | test | update]")
         ("bash-dir", po::value<std::string>(), "path/to/bashes/")
         ;
 
+    std::string casesDir;
     std::size_t threadNum = 1;
     po::options_description test("test options");
     test.add_options()
         ("all,A", "test all test cases (TODO)")
         ("phase", po::value<std::string>(),
             "arg = semantic/codegen/optim + pretest/extended (Only semantic check is supported now)")
-        ("cases-dir", po::value<std::string>(), "path/to/testcases/")
+        ("cases-dir", po::value<std::string>(&casesDir)
+            ->default_value(std::string(CMAKE_SOURCE_DIR) + "/TestCases/"), "path/to/testcases/")
 //        ("gcc-path", po::value<std::string>(), "gcc is used to compile the assembly code.")
         ;
     desc.add(test);
@@ -54,6 +59,12 @@ int main(int argc, char ** argv) {
         return 0;
     }
     if (vm.count("tool")) {
+        if (vm["tool"].as<std::string>() == "update") {
+            std::cout << "updating test cases..." << std::endl;
+            updateTestCases();
+            return 0;
+        }
+
         if (!vm.count("bash-dir")) {
             std::cout << "bash-dir is required." << std::endl;
             return 1;
@@ -129,7 +140,7 @@ void testCompiler(const std::vector<sjtu::TestCase> &testCases,
             std::cout << "\033[31mFailed. The build should succeed\033[0m\n";
             std::cout << "\033[31mCE Message =\n" << message << "\033[0m" << std::endl;
         } else {
-            std::cout << "\033[32mPassed.\033[0m." << std::endl;
+            std::cout << "\033[32mPassed.\033[0m" << std::endl;
         }
     }
     if (casesFailed.empty()) {
@@ -140,5 +151,10 @@ void testCompiler(const std::vector<sjtu::TestCase> &testCases,
     for (auto & name : casesFailed)
         std::cout << name << std::endl;
     std::cout << "\033[0m";
+}
+
+void updateTestCases() {
+    namespace bp = boost::process;
+    bp::system("python3 " + std::string(CMAKE_SOURCE_DIR) + "/Judge/update_testcases.py");
 }
 
