@@ -114,8 +114,9 @@ std::vector<sjtu::TestCase> collectTestCases(const std::string &phase, const std
 void testCompiler(const std::vector<sjtu::TestCase> &testCases,
                   const std::string & bashDir,
                   std::size_t threadNum) {
-    std::cout << "running " << testCases.size() << " test cases...\n";
+    std::cout << "running " << testCases.size() << " test cases..." << std::endl;
     for (auto & test : testCases) {
+        std::cout << "running " << test.filename << std::endl;
         bool res;
         std::string message;
         std::tie(res, message) = sjtu::test(test, bashDir);

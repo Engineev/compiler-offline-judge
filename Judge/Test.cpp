@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <string>
+#include <future>
 
 #include <boost/process.hpp>
 
@@ -30,12 +31,18 @@ std::pair<bool, std::string> testCompile(const TestCase &testCase, const std::st
     namespace bp = boost::process;
 
     std::error_code ec;
-    bp::ipstream is;
-    bp::system(path, ec, bp::std_out > is);
+    bp::opstream in;
+
+    bp::child c(path, ec, bp::std_err > bp::null, bp::std_out > bp::null, bp::std_in < in);
+    in << testCase.src << std::endl;
+    in.pipe().close();
+
+    c.wait();
+    auto exit = c.exit_code();
 
     if (testCase.assertion == AssertionType::SuccessCompile && (bool)ec)
         return {false, ec.message()};
-    if (testCase.assertion == AssertionType::FailureCompile && !(bool)ec)
+    if (testCase.assertion == AssertionType::FailureCompile && !(bool)ec && !exit)
         return {false, "The build should failed."};
     return {true, ""};
 }

@@ -15,4 +15,4 @@ yet.
 Use `-h` for more information about the program arguments. 
 A sample usage is shown bellow.
 
-`./compiler-oj -T=test --phase="semantic pretest" --cases-dir="./TestCases/" --bash-dir="./Bash/"`
+`./compiler-oj -T test --phase="semantic pretest" --cases-dir="./TestCases/" --bash-dir="./Bash/"`
