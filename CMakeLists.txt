@@ -15,7 +15,7 @@ if (UNIX AND NOT APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 endif ()
 
-add_definitions(-D CMAKE_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
+add_definitions(-DCMAKE_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 

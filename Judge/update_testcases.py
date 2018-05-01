@@ -1,6 +1,7 @@
 import requests
 import time
 import os
+import shutil
 from html.parser import HTMLParser
 
 oj_root_url = 'http://blacko.cn:6002'
@@ -54,8 +55,9 @@ def process_html(html):
     parser.feed(html)
 
 def update_testcases():
-    if not os.path.exists(testcases_path):
-        os.makedirs(testcases_path) 
+    if os.path.exists(testcases_path):
+        shutil.rmtree(testcases_path)
+    os.makedirs(testcases_path)
 
     html = get_text(oj_root_url + testcases_url)
     process_html(html)
