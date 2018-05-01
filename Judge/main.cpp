@@ -7,63 +7,78 @@
 
 #include "Build.h"
 #include "TestCase.h"
+#include "Test.h"
 
 void buildCompiler(const std::string & path);
 
-void testCompiler(const std::vector<std::string> & phases, std::size_t threadNum);
+std::vector<sjtu::TestCase> collectTestCases(const std::string & phase, const std::string & dir_);
 
-std::vector<sjtu::TestCase> collectTestCases(const std::string & phase, const std::string & dir);
+void testCompiler(const std::vector<sjtu::TestCase> & testCases,
+                  const std::string & bashDir,
+                  std::size_t threadNum);
+
+
 
 int main(int argc, char ** argv) {
     namespace po = boost::program_options;
 
-    po::options_description build("build options");
-    build.add_options()
-        ("path", po::value<std::string>(), "path/to/build.bash");
+    po::options_description desc("Allowed options");
+    desc.add_options()
+        ("help,h", "produce this message")
+        ("tool,T", po::value<std::string>(), "arg = build/test")
+        ("bash-dir", po::value<std::string>(), "path/to/bashes/")
+        ;
 
     std::size_t threadNum;
     po::options_description test("test options");
     test.add_options()
         ("all,A", "test all test cases")
-        ("phase", po::value<std::string>(), "arg = semantic/codegen/optim")
+        ("phase", po::value<std::string>(), "arg = semantic/codegen/optim + pretest/extended")
         ("thread,j", po::value<std::size_t>(&threadNum)->default_value(1))
         ("cases-dir", po::value<std::string>(), "path/to/testcases/")
+        ("gcc-path", po::value<std::string>(), "gcc is used to compile the assembly code.")
         ;
-
-    po::options_description desc("Allowed options");
-    desc.add_options()
-        ("help,h", "produce this message")
-        ("tool,T", po::value<std::string>(), "arg = build/test");
-    desc.add(build).add(test);
+    desc.add(test);
 
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
+
+    auto checkArg = [&vm] (const std::string & name) {
+        if (!vm.count(name)) {
+            std::cout << name << " is required" << std::endl;
+            return false;
+        }
+        return true;
+    };
+
     if (vm.count("help")) {
         std::cout << desc;
         return 0;
     }
     if (vm.count("tool")) {
+        if (!vm.count("bash-dir")) {
+            std::cout << "bash-dir is required." << std::endl;
+            return 1;
+        }
+        const auto dir = vm["bash-dir"].as<std::string>();
+
         if (vm["tool"].as<std::string>() == "build") {
-            if (!vm.count("path")) {
-                std::cout << "path/to/build.bash is required.";
-                return 0;
-            }
-            buildCompiler(vm["path"].as<std::string>());
+            buildCompiler(dir + "build.bash");
             return 0;
         }
         if (vm["tool"].as<std::string>() == "test") {
-            if (!vm.count("cases-dir")) {
-                std::cout << "cases-dir is required" << std::endl;
+            if (!checkArg("cases-dir") || !checkArg("bash-dir"))
                 return 1;
-            }
-            // TODO: collect test cases
+            std::vector<sjtu::TestCase> testcases;
             if (vm.count("all")) {
-                collectTestCases("semantic", vm["cases-dir"].as<std::string>());
-                testCompiler({"semantic", "codegen", "optim"}, threadNum);
+                testcases = collectTestCases("semantic", vm["cases-dir"].as<std::string>());
+                // TODO
                 return 0;
             }
             if (vm.count("phase")) {
-                testCompiler({vm["phase"].as<std::string>()}, threadNum);
+                auto phase = vm["phase"].as<std::string>();
+                testcases = collectTestCases(phase, vm["cases-dir"].as<std::string>());
+                testCompiler(testcases, vm["bash-dir"].as<std::string>(), threadNum);
                 return 0;
             }
         }
@@ -76,8 +91,6 @@ void buildCompiler(const std::string &path) {
     sjtu::build(path);
 }
 
-void testCompiler(const std::vector<std::string> &phases, std::size_t threadNum) {}
-
 std::vector<sjtu::TestCase> collectTestCases(const std::string &phase, const std::string &dir_) {
     namespace fs = boost::filesystem;
 
@@ -86,13 +99,30 @@ std::vector<sjtu::TestCase> collectTestCases(const std::string &phase, const std
     fs::path dir(dir_);
 
     for (auto & x : fs::directory_iterator(dir)) {
+        auto tmp = x.path().string();
 //        std::cerr << x.path().string() << std::endl;
         std::ifstream fin(std::ifstream(x.path().string()));
         auto testCase = sjtu::parse(fin);
+        testCase.filename = x.path().filename().string();
         if (testCase.phase == phase)
             res.emplace_back(std::move(testCase));
     }
 
     return res;
+}
+
+void testCompiler(const std::vector<sjtu::TestCase> &testCases,
+                  const std::string & bashDir,
+                  std::size_t threadNum) {
+    std::cout << "running " << testCases.size() << " test cases...\n";
+    for (auto & test : testCases) {
+        bool res;
+        std::string message;
+        std::tie(res, message) = sjtu::test(test, bashDir);
+        if (!res) {
+            std::cout << test.filename << " has failed.\n"
+                      << "Message = " << message << std::endl;
+        }
+    }
 }
 

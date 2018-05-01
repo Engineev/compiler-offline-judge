@@ -22,6 +22,7 @@ enum class AssertionType {
 }; // enum class AssertionType
 
 struct TestCase {
+    std::string filename;
     std::string src;
     std::string comment;
     std::string input, output;

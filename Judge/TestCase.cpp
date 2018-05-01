@@ -87,16 +87,17 @@ std::string readSource(const std::string &buffer) {
 std::pair<CIter, CIter> findBlock(const std::string &buffer, const std::string &name) {
     std::smatch m;
     if (!std::regex_search(buffer, m,
-                           std::regex("=== " + name + " ===\n(.|\n)*?===")))
+                           std::regex("=== " + name + " ===\n(.|\n)*?(===|!!\\*)")))
         return {buffer.end(), buffer.end()};
     auto beg = m[0].first;
     auto end = m[0].second;
 
     while (*beg != '\n')
         ++beg;
-    ++beg;
     while (*end != '\n')
         --end;
+    while (*beg == '\n' && beg != end)
+        ++beg;
     return {beg, end};
 }
 
