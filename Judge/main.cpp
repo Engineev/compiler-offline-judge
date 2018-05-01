@@ -17,8 +17,6 @@ void testCompiler(const std::vector<sjtu::TestCase> & testCases,
                   const std::string & bashDir,
                   std::size_t threadNum);
 
-
-
 int main(int argc, char ** argv) {
     namespace po = boost::program_options;
 
@@ -29,14 +27,14 @@ int main(int argc, char ** argv) {
         ("bash-dir", po::value<std::string>(), "path/to/bashes/")
         ;
 
-    std::size_t threadNum;
+    std::size_t threadNum = 1;
     po::options_description test("test options");
     test.add_options()
-        ("all,A", "test all test cases")
-        ("phase", po::value<std::string>(), "arg = semantic/codegen/optim + pretest/extended")
-        ("thread,j", po::value<std::size_t>(&threadNum)->default_value(1))
+        ("all,A", "test all test cases (TODO)")
+        ("phase", po::value<std::string>(),
+            "arg = semantic/codegen/optim + pretest/extended (Only semantic check is supported now)")
         ("cases-dir", po::value<std::string>(), "path/to/testcases/")
-        ("gcc-path", po::value<std::string>(), "gcc is used to compile the assembly code.")
+//        ("gcc-path", po::value<std::string>(), "gcc is used to compile the assembly code.")
         ;
     desc.add(test);
 
@@ -118,6 +116,7 @@ std::vector<sjtu::TestCase> collectTestCases(const std::string &phase, const std
 void testCompiler(const std::vector<sjtu::TestCase> &testCases,
                   const std::string & bashDir,
                   std::size_t threadNum) {
+    std::vector<std::string> casesFailed;
     std::cout << "running " << testCases.size() << " test cases..." << std::endl;
     for (auto & test : testCases) {
         std::cout << "\033[96mrunning " << test.filename << "\033[0m\t";
@@ -126,11 +125,20 @@ void testCompiler(const std::vector<sjtu::TestCase> &testCases,
         std::tie(res, message) = sjtu::test(test, bashDir);
 
         if (!res) {
+            casesFailed.emplace_back(test.filename);
             std::cout << "\033[31mFailed. The build should succeed\033[0m\n";
             std::cout << "\033[31mCE Message =\n" << message << "\033[0m" << std::endl;
         } else {
             std::cout << "\033[32mPassed.\033[0m." << std::endl;
         }
     }
+    if (casesFailed.empty()) {
+        std::cout << "\033[32mAll test cases have been passed.\033[0m" << std::endl;
+        return;
+    }
+    std::cout << "\033[31mThe failed test cases:\n";
+    for (auto & name : casesFailed)
+        std::cout << name << std::endl;
+    std::cout << "\033[0m";
 }
 

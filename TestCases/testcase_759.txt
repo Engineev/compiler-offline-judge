@@ -1,0 +1,49 @@
+int main() {
+    int a;
+    bool b;
+    string c;
+    bool flag = true;
+    {
+        if (b == b) {
+            flag = false;
+        }
+        int b;
+        bool c;
+        string a;
+        {
+            int c;
+            if (a + a - a == a) {
+                flag = true;
+            }
+            bool a;
+            string b;                                                                                                 {int [][][][][][][][][][][][][][][][][][][][] a = new int [1][1][1][1][1][1][1][1][1][1][1][1][1][1][1][][l][][][];
+                {
+                    return 0;
+                }
+            }
+        }
+    }
+    return 0;
+    return 0;
+}
+
+/*!! metadata:
+=== comment ===
+刘予希 liuyuxi-failure_compile
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

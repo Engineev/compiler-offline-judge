@@ -1,29 +1,30 @@
 class A {
-	void a() {
-	}
+    int x;
+}
+
+class A {
+    int x;
+    int y;
 }
 
 int main() {
-	A c = new A;
-    c.a(;
-	// c.a; // in case you want to implement function pointer
 }
 
 
 
 /*!! metadata:
 === comment ===
-noname-515030910645-suyufeng.txt
+Test duplicate class-2-5120309049-liaochao.mx
 === is_public ===
 True
 === assert ===
-success_compile
+failure_compile
 === timeout ===
-0
+0.0
 === input ===
 
 === phase ===
-semantic extended
+semantic pretest
 === output ===
 
 === exitcode ===

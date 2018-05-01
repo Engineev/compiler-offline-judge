@@ -1,17 +1,12 @@
-int main() {
-    if ("20" && "16") {
-    }
-}
-
-
+你们好呀! 预祝pass~
 
 /*!! metadata:
 === comment ===
-Test binary operation-1-5120309049-liaochao.mx
+mushroom id 蛤蛤!
 === is_public ===
 True
 === assert ===
-success_compile
+failure_compile
 === timeout ===
 0
 === input ===
@@ -21,7 +16,7 @@ semantic pretest
 === output ===
 
 === exitcode ===
-
+0
 
 !!*/
 

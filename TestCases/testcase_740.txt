@@ -39,7 +39,7 @@ True
 === assert ===
 failure_compile
 === timeout ===
-0
+0.0
 === input ===
 
 === phase ===

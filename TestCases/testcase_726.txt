@@ -1,18 +1,18 @@
 int main() {
-    true = false;
+    void a;
 }
 
 
 
 /*!! metadata:
 === comment ===
-test assign operation-asiop-3-5120309049-liaochao.mx
+Test void type of variable-1-5110379024-wuhang.mx
 === is_public ===
 True
 === assert ===
-success_compile
+failure_compile
 === timeout ===
-0
+0.0
 === input ===
 
 === phase ===

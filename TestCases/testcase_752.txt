@@ -1,18 +1,18 @@
-int main() {
-    int a = 1;
-    int x = a[1];
+int main()
+{
+    int[][][][] a = new int[1][2][3][4];
+    int[] b = new int[5];
+    int c = b[a];
     return 0;
 }
 
-
-
 /*!! metadata:
 === comment ===
-test array-arrop-1-5100379071-puyouer.mx
+田博宇 
 === is_public ===
 True
 === assert ===
-success_compile
+failure_compile
 === timeout ===
 0
 === input ===
@@ -22,7 +22,7 @@ semantic pretest
 === output ===
 
 === exitcode ===
-
+0
 
 !!*/
 

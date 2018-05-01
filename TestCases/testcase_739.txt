@@ -1,22 +1,23 @@
-int[] f() {
-    return new int[20];
+int f(int anything) {
+	return 0;
 }
 
 int main() {
-    f() = new int[16];
+  int x = f(x);
+  return x;
 }
 
 
 
 /*!! metadata:
 === comment ===
-test lvalue-asiop-5-5100379071-puyouer.mx
+Test self reference-5090379042-jiaxiao.mx
 === is_public ===
 True
 === assert ===
-success_compile
+failure_compile
 === timeout ===
-0
+0.0
 === input ===
 
 === phase ===

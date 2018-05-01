@@ -1,31 +1,30 @@
 class A {
-  B() {}
-}
-
-class B {
-  A() {}
+    int a;
 }
 
 int main() {
-  A b = new A;
-  B a = new B;
+    A a = new A;
+    A b = new A;
+    A c = new A;
+    c = a + b;
+    return 0;
 }
 
 
 
 /*!! metadata:
 === comment ===
-Test constructor-noname-515030910642-chenxinhao.txt
+test binary operation-1-5100379071-puyouer.mx
 === is_public ===
 True
 === assert ===
-success_compile
+failure_compile
 === timeout ===
-0
+0.0
 === input ===
 
 === phase ===
-semantic extended
+semantic pretest
 === output ===
 
 === exitcode ===

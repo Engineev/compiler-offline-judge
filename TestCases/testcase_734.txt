@@ -1,20 +1,26 @@
-int b;
-int c;
-int main() {
+class A {
+    int x;
+    int y;
+    int z;
 }
-int c;
+
+int main() {
+    int t;
+    A x;
+    t = x;
+}
 
 
 
 /*!! metadata:
 === comment ===
-Test duplicate variables-2-5100309127-hetianxing.mx
+Test type checking-asiop-6-5100379071-puyouer.mx
 === is_public ===
 True
 === assert ===
-success_compile
+failure_compile
 === timeout ===
-0
+0.0
 === input ===
 
 === phase ===

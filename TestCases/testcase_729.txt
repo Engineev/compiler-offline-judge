@@ -1,18 +1,19 @@
-int main() {
-    "a" = "b";
+int mai() {
+    string str = "120";
+    int x = str >> 3;
 }
 
 
 
 /*!! metadata:
 === comment ===
-Test definition of constant-asiop-1-5100379071-puyouer.mx
+Test bit operation-1-5120309049-liaochao.mx
 === is_public ===
 True
 === assert ===
-success_compile
+failure_compile
 === timeout ===
-0
+0.0
 === input ===
 
 === phase ===
