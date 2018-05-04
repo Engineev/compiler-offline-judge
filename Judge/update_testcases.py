@@ -33,6 +33,7 @@ class TestCaseHTMLParser(HTMLParser):
     def get_testcase(self):
         testcase = get_text(oj_root_url + self.testcase_url)
         out_file = os.path.join(output_path, self.testcase_url.split('/')[-1])
+        print(out_file)
         with open(out_file, 'w', encoding='utf8') as f:
             f.write(testcase)
 
@@ -74,7 +75,8 @@ def print_help():
     )
 
 def update_testcases():
-	output_path = os.path.join(testcases_path, testcases_subdir)
+    global output_path
+    output_path = os.path.join(testcases_path, testcases_subdir)
     if os.path.exists(output_path):
         shutil.rmtree(output_path)
     os.makedirs(output_path) 
@@ -100,6 +102,5 @@ def main(argv):
             get_disabled_testcases = True
     update_testcases()
     
-
 if __name__ == '__main__':
     main(sys.argv[1:])
