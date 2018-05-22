@@ -1,0 +1,5 @@
+{
+    "testcases_dir": "./TestCases",
+    "bash_dir": "./Compiler",
+    "phases": ["codegen pretest"]
+}

@@ -3,3 +3,6 @@ cmake-build-*/
 .DS_Store
 LocalTests/
 .vscode/
+__pycache__/
+TestCases/
+Compiler/
