@@ -2,3 +2,4 @@
 cmake-build-*/
 .DS_Store
 LocalTests/
+.vscode/
