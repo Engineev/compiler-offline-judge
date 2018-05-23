@@ -5,7 +5,7 @@ from . import testcase
 def test(testcase, bash_path):
     res = subprocess.run(["bash", bash_path], 
         input=testcase.src, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
-        encoding="utf-8")
+        encoding='ascii')
     with open("./__a.asm", "w") as f:
         f.write(res.stdout)
     

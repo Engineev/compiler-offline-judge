@@ -7,4 +7,4 @@ def run(path, input=None, timeout=None):
     assert(res.returncode == 0)
     return subprocess.run("./__a.out", 
         input=input, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
-        timeout=timeout, encoding="utf-8")
+        timeout=timeout, encoding='ascii')
