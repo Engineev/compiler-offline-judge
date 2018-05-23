@@ -14,7 +14,7 @@ To install compiler-oj, just `cd` into the repository directory and
 
 `pip3 install .`
 
-May you need to run 
+Maybe you need to run 
 
 `export $PATH='$HOME/.local/bin'`
 
