@@ -3,7 +3,7 @@ from . import assembly
 from . import testcase
 
 def test(testcase, bash_path):
-    res = subprocess.run(["bash", bash_path], universal_newline=True,
+    res = subprocess.run(["bash", bash_path], universal_newlines=True,
         input=testcase.src, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
     with open("./__a.asm", "w") as f:
         f.write(res.stdout)
