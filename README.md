@@ -1,12 +1,10 @@
 # compiler-offline-judge
 
-**UNDER DEVELOPMENT**
-
 The offline version of acm-compiler-judge. The process is still ongoing.
-Only the semantic check part has been completed and it has not been tested
-yet.
+Only the semantic check and the codegen part have been completed and they
+have not been tested yet.
 
-## Getting Start
+## Getting Started
 
 ### Install
 
