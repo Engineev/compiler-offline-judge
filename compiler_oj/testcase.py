@@ -7,15 +7,16 @@ class TestCase:
         self.src = self.__read_source()
         self.comment = self.__find_block("comment")
         self.input = self.__find_block("input")
-        self.output = self.__find_block("output")
+        self.output = self.__format_output(self.__find_block("output"))
         self.assertion = self.__find_block("assert")
         self.timeout = self.__find_block("timeout")
-        if (self.timeout != ""):
-            self.timeout = float(self.timeout)
+        self.timeout = float(self.timeout) if self.timeout != "" else None
         self.exitcode = self.__find_block("exitcode")
-        if (self.exitcode != ""):
-            self.exitcode = int(self.exitcode)
+        self.exitcode = int(self.exitcode) if self.exitcode != "" else None
         self.phase = self.__find_block("phase")
+
+    def __format_output(self, raw):
+        return '\n'.join(list(map(lambda x: x.strip(), raw.split('\n'))))
 
     def __read_source(self):
         end = self.__raw.find("/*!! metadata:")

@@ -6,3 +6,4 @@ LocalTests/
 __pycache__/
 TestCases/
 Compiler/
+__a.*

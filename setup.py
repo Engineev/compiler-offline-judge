@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(name='hello',
+setup(name='compiler_oj',
       license='MIT',
       packages=['compiler_oj'],
       entry_points = {

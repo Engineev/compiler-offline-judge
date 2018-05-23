@@ -1,10 +1,10 @@
-import os
-import platform
 import subprocess
 
 def run(path, input=None, timeout=None):
-    os.system("nasm -o __a.o -felf64 " + path)
-    os.system("ld __a.o -o __a.out")
+    res = subprocess.run("nasm -felf64 -o __a.o " + path, shell=True)
+    assert(res.returncode == 0)
+    res = subprocess.run("gcc -o __a.out -O0 -static __a.o", shell=True)
+    assert(res.returncode == 0)
     return subprocess.run("./__a.out", 
-        input=input, stdout=subprocess.PIPE,
+        input=input, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
         timeout=timeout, encoding="utf-8")
