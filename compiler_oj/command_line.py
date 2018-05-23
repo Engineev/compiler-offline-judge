@@ -6,6 +6,7 @@ import subprocess
 
 from . import testcase
 from . import codegen_test
+from . import semantic_test
 
 def main():
     parser = argparse.ArgumentParser()
@@ -29,17 +30,24 @@ def main():
         testcase.read_testcases(config["testcases_dir"]))
     cases_failed = []
     for test in cases:
-        if test.phase.partition(' ')[0] == "codegen":
-            print("running " + test.filename + "...", end=' ')
-            sys.stdout.flush()
+        print("running " + test.filename + "...", end=' ')
+        sys.stdout.flush()
+        phase = test.phase.partition(' ')[0]
+        if  phase == "codegen":    
             res = codegen_test.test(
                     test, os.path.join(config["bash_dir"], "codegen.bash"))
-            if res[0]:
-                print("Passed.")
-            else:
-                cases_failed.append(test.filename)
-                print("Failed: " + res[1])
-                # return
+        elif phase == "semantic":
+            res = semantic_test.test(
+                    test, os.path.join(config["bash_dir"], "semantic.bash"))
+        else:
+            print(phase + " is unsupported currently")
+            continue
+        if res[0]:
+            print("Passed.")
+        else:
+            cases_failed.append(test.filename)
+            print("Failed: " + res[1])
+                
     print("testcases failed:")
     for name in cases_failed:
         print(name)

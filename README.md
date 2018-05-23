@@ -16,7 +16,7 @@ To install compiler-oj, just `cd` into the repository directory and
 
 Maybe you need to run 
 
-`export $PATH='$HOME/.local/bin'`
+`export PATH="$HOME/.local/bin:$PATH"`
 
 in order to run the judge by `compiler-oj` in the terminal.
 
