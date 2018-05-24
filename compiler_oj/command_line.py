@@ -11,7 +11,8 @@ from . import semantic_test
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", 
-        help="the path to the config file", type=str, default="./config.json")
+        help="the path to the config file (default=\"./config.json\")", 
+        type=str, default="./config.json")
     args = parser.parse_args()
     
     with open(args.config) as f:
@@ -23,7 +24,7 @@ def main():
         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
     if res.returncode != 0:
         print("Failed.")
-        print(res.stderr)
+        print(str(res.stderr))
         return
     print("Passed.")
 
