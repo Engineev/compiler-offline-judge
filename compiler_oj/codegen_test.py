@@ -9,9 +9,12 @@ def test(testcase, bash_path):
         f.write(res.stdout)
     
     try:
-        res = assembly.run("__a.asm", input=testcase.input, timeout=testcase.timeout)
+        flag, res = assembly.run("__a.asm", 
+           input=testcase.input, timeout=testcase.timeout)
     except subprocess.TimeoutExpired:
         return (False, "TLE")
+    if not flag:
+        return (False, res)
 
     if testcase.assertion == "output":
         if res.returncode != 0:
@@ -19,10 +22,6 @@ def test(testcase, bash_path):
         output = '\n'.join(list(map(lambda x: x.strip(), res.stdout.split('\n'))))
         if output.strip() == testcase.output.strip():
             return (True, "")
-        # print("\n")
-        # print(res.stdout)
-        # print(output)
-        # print(testcase.output)
         return (False, "output dismatched")
     if testcase.assertion == "exitcode":
         if res.returncode == testcase.exitcode:
