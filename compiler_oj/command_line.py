@@ -57,3 +57,4 @@ def main():
     print("testcases failed:")
     for name in cases_failed:
         print(name)
+    subprocess.run("rm __a.asm __a.out", shell=True)
