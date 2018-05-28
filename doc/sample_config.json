@@ -1,5 +1,7 @@
 {
     "testcases_dir": "./TestCases",
-    "bash_dir": "./Compiler",
-    "phases": ["semantic pretest"]
+    "bash_dir": "../Compiler",
+    "phases": [
+        "codegen pretest"
+    ]
 }
