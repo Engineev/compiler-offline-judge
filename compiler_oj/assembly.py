@@ -6,7 +6,7 @@ def run(path, input=None, timeout=None):
     if res.returncode != 0:
         return (False, "The nasm code can not be compiled.")
     res = subprocess.run("gcc -o __a.out -O0 --static __a.o", shell=True,
-       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if res.returncode != 0:
         return (False, "The nasm code can not be linked")
     return (True, subprocess.run("./__a.out", universal_newlines=True,

@@ -8,6 +8,12 @@ from . import testcase
 from . import codegen_test
 from . import semantic_test
 
+def replaceNewlines(dst, src):
+    with open(dst, "w") as dst_f:
+        with open(src) as src_f:
+            content = src_f.read()
+        dst_f.write(content.replace("\r\n", "\n"))
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", 
@@ -18,9 +24,17 @@ def main():
     with open(args.config) as f:
         config = json.load(f)
 
+    for name in ["build.bash", "semantic.bash", "codegen.bash", "optim.bash"]:
+        src = os.path.join(config["bash_dir"], name)
+        if not os.path.isfile(src):
+            continue
+        dst = os.path.join(config["bash_dir"], "__" + name)
+        replaceNewlines(dst, src)
+
     print("building...", end=' ')
     sys.stdout.flush()
-    res = subprocess.run(["bash", os.path.join(config["bash_dir"], "build.bash")],
+    res = subprocess.run(
+        ["bash", os.path.join(config["bash_dir"], "__build.bash")],
         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
     if res.returncode != 0:
         print("Failed.")
@@ -38,10 +52,10 @@ def main():
         phase = test.phase.partition(' ')[0]
         if  phase == "codegen":    
             res = codegen_test.test(
-                    test, os.path.join(config["bash_dir"], "codegen.bash"))
+                test, os.path.join(config["bash_dir"], "__codegen.bash"))
         elif phase == "semantic":
             res = semantic_test.test(
-                    test, os.path.join(config["bash_dir"], "semantic.bash"))
+                test, os.path.join(config["bash_dir"], "__semantic.bash"))
         else:
             print(phase + " is unsupported currently")
             continue
@@ -57,4 +71,5 @@ def main():
     print("testcases failed:")
     for name in cases_failed:
         print(name)
-    subprocess.run("rm __a.asm __a.out", shell=True)
+    subprocess.run("rm __a.asm __a.o __a.out __build.bash __semantic.bash __codegen.bash", 
+        shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
