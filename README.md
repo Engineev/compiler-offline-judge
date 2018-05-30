@@ -29,15 +29,20 @@ file is given in `doc/`.
 
 The default value of `-c` is `./config.json`
 
-## Get all testcases from website
+## Scripts
+
+Some useful scripts are provided in `script`. They are written by
+various authors and will NOT be installed. 
+
+### Get all testcases from website
 
 * This part was written by TimerChen
-* The `download.sh` only test on Ubuntu with python3.6, which could not work on other environments.
+* The `download.py` only test on Ubuntu with python3.6, which could not work on other environments.
 
-### Download all cases
+#### Download all cases
 In ./TestCases directory, use `python3 download.py` to get all testcases.
 
-### Download cases you need
+#### Download cases you need
 Modify the `./TestCases/download.py` file, and change the varaiable `last_test_log` to the website of your last submission.
 
 Like: `last_test_log = 'http://blacko.cn:6002/Compiler/build/2161'`

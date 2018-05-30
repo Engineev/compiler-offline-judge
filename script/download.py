@@ -6,7 +6,8 @@ last_test_log = 'http://blacko.cn:6002/Compiler/build/2161'
 import urllib3
 import re
 import os
-val2 =  os.system('rm testcase_*.txt')
+os.mkdir("./TestCases")
+val2 =  os.system('rm ./TestCases/testcase_*.txt')
 http = urllib3.PoolManager()
 r = http.request('GET', last_test_log)
 str = r.data.decode("UTF-8")
@@ -17,5 +18,5 @@ for i in l:
 	print("file "+i+" downloading...")
 	r = http.request('GET', 'http://blacko.cn:6002/Compiler/download/'+i)
 	str = r.data.decode("UTF-8")
-	with open(i,'wb') as f:  
+	with open(os.path.join("./TestCases", i),'wb') as f:  
 		f.write(r.data)
