@@ -72,13 +72,16 @@ def main():
         elif phase == "semantic":
             res = semantic_test.test(
                 test, os.path.join(config["bash_dir"], "__semantic.bash"))
+        elif phase == "optim":
+            res = codegen_test.test(
+                test, os.path.join(config["bash_dir"], "__optim.bash"))
         else:
             print(phase + " is unsupported currently")
             continue
         testNum += 1
         if res[0]:
             passNum += 1
-            print("\033[32mPassed.\033[0m")
+            print("\033[32mPassed. " + res[1] + "\033[0m")
         else:
             cases_failed.append(test.filename)
             print("\033[31mFailed: " + res[1] + "\033[0m")
@@ -91,5 +94,5 @@ def main():
         print(name)
 
     print("Pass rate: {}/{}".format(passNum, testNum))
-    subprocess.run("rm __a.asm __a.o __a.out __build.bash __semantic.bash __codegen.bash", 
+    subprocess.run("rm __a.asm __a.o __a.out", 
         shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
