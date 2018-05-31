@@ -3,6 +3,7 @@ import json
 import os
 import sys
 import subprocess
+import pickle
 
 from . import testcase
 from . import codegen_test
@@ -96,3 +97,23 @@ def main():
     print("Pass rate: {}/{}".format(passNum, testNum))
     subprocess.run("rm __a.asm __a.o __a.out", 
         shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+    print("\nComparing with the last run: ")
+    log_filename = "oj-result.data"
+    last_failed = []
+    try:
+        with open(log_filename, "rb") as f:
+            last_failed = pickle.load(f)
+    except:
+        print("The data of the last run can not be read")
+    with open(log_filename, "wb") as f:
+        pickle.dump(cases_failed, f)
+    
+    print("\033[32m", end='')
+    for name in set(last_failed) - set(cases_failed):
+        print("+ " + name)
+    print("\033[0m" + "\033[31m")
+    for name in set(cases_failed) - set(last_failed):
+        print("- " + name)
+    print("\033[0m", end='')
+    
