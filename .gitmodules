@@ -1,0 +1,3 @@
+[submodule "compiler-testcases"]
+	path = compiler-testcases
+	url = https://github.com/Engineev/compiler-testcases.git
