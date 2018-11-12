@@ -2,13 +2,13 @@
 
 The offline version of acm-compiler-judge.
 
+## Requirement
+
+* python3 (version >= 3.5)
+
 ## Getting Started
 
-### Run without install
-
-TODO
-
-### Install
+### Install (Optional)
 
 To install compiler-oj, just `cd` into the repository directory and
 
@@ -28,8 +28,11 @@ file is given in `doc/`.
 
 ### Test
 
+`cd` into the repository directory and `python3 ./run.py`.  If you have install
+compiler-oj, then you can also use
+
 `compiler-oj -c='PATH/TO/THE/CONFIG/FILE'`
 
-The default value of `-c` is `./config.json`
+to start a test. The default value of `-c` is `./config.json`
 
 
