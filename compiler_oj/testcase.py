@@ -1,7 +1,8 @@
 import os
 
+
 class TestCase:
-    def __init__(self, raw, filename = "unknown"):
+    def __init__(self, raw, filename="unknown"):
         self.__raw = raw
         self.filename = filename
         self.src = self.__read_source()
@@ -15,7 +16,8 @@ class TestCase:
         self.exitcode = int(self.exitcode) if self.exitcode != "" else None
         self.phase = self.__find_block("phase")
 
-    def __format_output(self, raw):
+    @staticmethod
+    def __format_output(raw):
         return '\n'.join(list(map(lambda x: x.strip(), raw.split('\n'))))
 
     def __read_source(self):
@@ -25,15 +27,16 @@ class TestCase:
     def __find_block(self, name):
         title = '=== ' + name + ' ==='
         beg = self.__raw.find(title)
-        if (beg == -1):
+        if beg == -1:
             return ''
         beg += len(title)
         end = self.__raw.find("===", beg)
-        if (end == -1):
+        if end == -1:
             end = self.__raw.find("!!*", beg)
-        if (end == -1):
+        if end == -1:
             return ""
         return self.__raw[beg:end].strip()
+
 
 def read_testcases(dir):
     testcases = []
@@ -41,7 +44,7 @@ def read_testcases(dir):
     names = os.listdir(dir)
     for name in names:
         __, extension = os.path.splitext(name)
-        if (extension != ".txt"):
+        if extension != ".txt":
             continue
         with open(os.path.join(dir, name)) as f:
             raw = f.read()

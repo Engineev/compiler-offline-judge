@@ -5,6 +5,6 @@ setup(name='compiler_oj',
       packages=['compiler_oj'],
       url="https://github.com/Engineev/compiler-offline-judge",
       author='Yunwei Ren',
-      entry_points = {
-        'console_scripts': ['compiler-oj=compiler_oj.command_line:main'],
-    })
+      entry_points={
+        'console_scripts': ['compiler-oj=compiler_oj.command_line:main']
+      })

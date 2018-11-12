@@ -9,7 +9,8 @@ from . import testcase
 from . import codegen_test
 from . import semantic_test
 
-def replaceNewlines(dst, src):
+
+def replace_newlines(dst, src):
     with open(dst, "w") as dst_f:
         with open(src) as src_f:
             content = src_f.read()
@@ -19,14 +20,18 @@ def replaceNewlines(dst, src):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config",
-                        help="the path to the config file (default=\"./config.json\")",
+                        help="the path to the config file " +
+                             "(default=\"./config.json\")",
                         type=str, default="./config.json")
     parser.add_argument("-t", "--testcases_dir",
-                        help="the path to testcases(default in config file)", type=str, default="")
+                        help="the path to testcases(default in config file)",
+                        type=str, default="")
     parser.add_argument("-b", "--bash_dir",
-                        help="the path to bash file(default in config file)", type=str, default="")
+                        help="the path to bash file(default in config file)",
+                        type=str, default="")
     parser.add_argument("-p", "--phases",
-                        help="the test phase(default in config file)", type=str, default="")
+                        help="the test phase(default in config file)",
+                        type=str, default="")
     args = parser.parse_args()
 
     with open(args.config) as f:
@@ -38,13 +43,12 @@ def main():
     if args.phases != "":
         config["phases"] = [phase.strip() for phase in args.phases.split(",")]
 
-
     for name in ["build.bash", "semantic.bash", "codegen.bash", "optim.bash"]:
         src = os.path.join(config["bash_dir"], name)
         if not os.path.isfile(src):
             continue
         dst = os.path.join(config["bash_dir"], "__" + name)
-        replaceNewlines(dst, src)
+        replace_newlines(dst, src)
 
     print("building...", end=' ')
     sys.stdout.flush()
@@ -57,12 +61,13 @@ def main():
         return
     print("Passed.")
 
-    cases = list(filter(lambda x: x.phase in config["phases"],
-                        testcase.read_testcases(config["testcases_dir"])))
+    cases = [t for t in testcase.read_testcases(config['testcases_dir'])
+             if t.phase in config['phases']]
+    cases.sort(key=lambda x: x.filename)
     cases_failed = []
     print(str(len(cases)) + " testcases")
-    passNum = 0
-    testNum = 0
+    pass_num = 0
+    test_num = 0
     for test in cases:
         print("running " + test.filename + "...", end=" ")
         sys.stdout.flush()
@@ -79,9 +84,9 @@ def main():
         else:
             print(phase + " is unsupported currently")
             continue
-        testNum += 1
+        test_num += 1
         if res[0]:
-            passNum += 1
+            pass_num += 1
             print("\033[32mPassed. " + res[1] + "\033[0m")
         else:
             cases_failed.append(test.filename)
@@ -94,26 +99,29 @@ def main():
     for name in cases_failed:
         print(name)
 
-    print("Pass rate: {}/{}".format(passNum, testNum))
-    subprocess.run("rm __a.asm __a.o __a.out", 
-        shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    print("Pass rate: {}/{}".format(pass_num, test_num))
+    subprocess.run("rm __a.asm __a.o __a.out",
+                   shell=True, stdout=subprocess.DEVNULL,
+                   stderr=subprocess.DEVNULL)
+    subprocess.run("rm " + config['bash_dir'] + "/__*.bash", shell=True)
 
-    print("\nComparing with the last run: ")
-    log_filename = "oj-result.data"
-    last_failed = []
-    try:
-        with open(log_filename, "rb") as f:
-            last_failed = pickle.load(f)
-    except:
-        print("The data of the last run can not be read")
-    with open(log_filename, "wb") as f:
-        pickle.dump(cases_failed, f)
-    
-    print("\033[32m", end='')
-    for name in set(last_failed) - set(cases_failed):
-        print("+ " + name)
-    print("\033[0m" + "\033[31m")
-    for name in set(cases_failed) - set(last_failed):
-        print("- " + name)
-    print("\033[0m", end='')
-    
+    # TODO
+    # print("\nComparing with the last run: ")
+    # log_filename = "oj-result.data"
+    # last_failed = []
+    # try:
+    #     with open(log_filename, "rb") as f:
+    #         last_failed = pickle.load(f)
+    # except:
+    #     print("The data of the last run can not be read")
+    # with open(log_filename, "wb") as f:
+    #     pickle.dump(cases_failed, f)
+    #
+    # print("\033[32m", end='')
+    # for name in set(last_failed) - set(cases_failed):
+    #     print("+ " + name)
+    # print("\033[0m" + "\033[31m")
+    # for name in set(cases_failed) - set(last_failed):
+    #     print("- " + name)
+    # print("\033[0m", end='')
+

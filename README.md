@@ -1,10 +1,12 @@
 # compiler-offline-judge
 
-The offline version of acm-compiler-judge. The process is still ongoing.
-Only the semantic check and the codegen part have been completed and they
-have not been tested yet.
+The offline version of acm-compiler-judge.
 
 ## Getting Started
+
+### Run without install
+
+TODO
 
 ### Install
 
@@ -18,6 +20,7 @@ Maybe you need to run
 
 in order to run the judge by `compiler-oj` in the terminal.
 
+
 ### Write the config file
 
 A json file is required to tell the judge what to do. A sample config
@@ -29,22 +32,4 @@ file is given in `doc/`.
 
 The default value of `-c` is `./config.json`
 
-## Scripts
 
-Some useful scripts are provided in `script`. They are written by
-various authors and will NOT be installed. 
-
-### Get all testcases from website
-
-* This part was written by TimerChen
-* The `download.py` only test on Ubuntu with python3.6, which could not work on other environments.
-
-#### Download all cases
-In ./TestCases directory, use `python3 download.py` to get all testcases.
-
-#### Download cases you need
-Modify the `./TestCases/download.py` file, and change the varaiable `last_test_log` to the website of your last submission.
-
-Like: `last_test_log = 'http://blacko.cn:6002/Compiler/build/2161'`
-
-Then it will only download what you need to test.
