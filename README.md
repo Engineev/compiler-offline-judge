@@ -28,8 +28,8 @@ file is given in `doc/`.
 
 ### Test
 
-`cd` into the repository directory and `python3 ./run.py`.  If you have install
-compiler-oj, then you can also use
+`cd` into the repository directory and `python3 ./run.py`.  If compiler-oj has
+been installed, you can also use
 
 `compiler-oj -c='PATH/TO/THE/CONFIG/FILE'`
 
