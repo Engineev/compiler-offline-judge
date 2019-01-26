@@ -74,7 +74,8 @@ def main():
         phase = test.phase.partition(" ")[0]
         if phase == "codegen":
             res = codegen_test.test(
-                test, os.path.join(config["bash_dir"], "__codegen.bash"))
+                test, os.path.join(config["bash_dir"], "__codegen.bash"),
+                config["ir_interpreter"])
         elif phase == "semantic":
             res = semantic_test.test(
                 test, os.path.join(config["bash_dir"], "__semantic.bash"))
@@ -94,16 +95,18 @@ def main():
 
     if len(cases_failed) == 0:
         print("All testcases have been passed")
-        return
-    print("testcases failed:")
-    for name in cases_failed:
-        print(name)
+    else:
+        print("testcases failed:")
+        for name in cases_failed:
+            print(name)
+        print("Pass rate: {}/{}".format(pass_num, test_num))
 
-    print("Pass rate: {}/{}".format(pass_num, test_num))
     subprocess.run("rm __a.asm __a.o __a.out",
                    shell=True, stdout=subprocess.DEVNULL,
                    stderr=subprocess.DEVNULL)
-    subprocess.run("rm " + config['bash_dir'] + "/__*.bash", shell=True)
+    rm = "rm " + config['bash_dir'] + "/__*.bash"
+    subprocess.run(rm, shell=True)
+    subprocess.run("rm ./__ir.ll", shell=True)
 
     # TODO
     # print("\nComparing with the last run: ")
