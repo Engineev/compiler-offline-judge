@@ -63,9 +63,11 @@ def test_with_asm(case, asm_src):
                              stdout=subprocess.PIPE,
                              stderr=subprocess.DEVNULL,
                              timeout=case.timeout)
+    except subprocess.TimeoutExpired:
+        return False, "TLE"
     except UnicodeDecodeError:
         return False, "The output can not be decoded"
-    return check_result(case, res.stdout.decode('utf8'))
+    return check_result(case, res)
 
 
 def test(case, config):

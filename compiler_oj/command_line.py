@@ -95,7 +95,8 @@ def main():
                    stderr=subprocess.DEVNULL)
     rm = "rm " + config['bash_dir'] + "/__*.bash"
     subprocess.run(rm, shell=True)
-    subprocess.run("rm ./__ir.ll", shell=True)
+    if config['ir_interpreter']:
+        subprocess.run("rm ./__ir.ll", shell=True)
 
     # TODO
     # print("\nComparing with the last run: ")
