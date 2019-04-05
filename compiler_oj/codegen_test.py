@@ -1,5 +1,5 @@
 import subprocess
-from . import assembly
+import os
 from . import testcase
 
 
@@ -43,23 +43,40 @@ def test_with_asm(case, asm_src):
     # type: (testcase, str) -> (bool, str)
     with open("./__a.asm", "w") as f:
         f.write(asm_src)
+    # build
+    res = subprocess.run("nasm -felf64 -o __a.o __a.asm", shell=True,
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if res.returncode != 0:
+        return False, "The nasm code can not be compiled.\n" + \
+               res.stderr.decode('utf8')
+    # link
+    res = subprocess.run("gcc -o __a.out -O0 --static -fno-pie -no-pie __a.o",
+                         shell=True, stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+    if res.returncode != 0:
+        return False, "The nasm code can not be linked.\n" + \
+               res.stderr.decode('utf8')
+    # run
     try:
-        flag, res = assembly.run("__a.asm", input=case.input.encode('utf-8'),
-                                 timeout=case.timeout)
-    except subprocess.TimeoutExpired:
-        return False, "TLE"
-    if not flag:
-        return False, res
-    return check_result(case, res)
+        res = subprocess.run("./__a.out", shell=True,
+                             input=case.input.encode('utf8'),
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.DEVNULL,
+                             timeout=case.timeout)
+    except UnicodeDecodeError:
+        return False, "The output can not be decoded"
+    return check_result(case, res.stdout.decode('utf8'))
 
 
-def test(case, bash_path, ir_interpreter_path=""):
-    # type: (testcase, str, str) -> (bool, str)
-    
-    res = subprocess.run(["bash", bash_path], input=case.src.encode('utf-8'),
-                         stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+def test(case, config):
+    assert type(case) == testcase.TestCase
+    bash_path = os.path.join(config['bash_dir'], '__codegen.bash')
+    res = subprocess.run(['bash', bash_path], input=case.src.encode('utf8'),
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    result_src = res.stdout.decode('utf8')
+    if config['ir_interpreter']:
+        return test_with_ir_interpreter(case, result_src,
+                                        config['ir_interpreter'])
+    return test_with_asm(case, result_src)
 
-    if ir_interpreter_path:
-        return test_with_ir_interpreter(case, res.stdout.decode('utf-8'),
-                                        ir_interpreter_path)
-    return test_with_asm(case, res.stdout.decode('utf-8'))
+

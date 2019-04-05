@@ -19,30 +19,15 @@ def replace_newlines(dst, src):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--config",
+    parser.add_argument("config",
                         help="the path to the config file " +
                              "(default=\"./config.json\")",
                         type=str, default="./config.json")
-    parser.add_argument("-t", "--testcases_dir",
-                        help="the path to testcases(default in config file)",
-                        type=str, default="")
-    parser.add_argument("-b", "--bash_dir",
-                        help="the path to bash file(default in config file)",
-                        type=str, default="")
-    parser.add_argument("-p", "--phases",
-                        help="the test phase(default in config file)",
-                        type=str, default="")
     args = parser.parse_args()
-
     with open(args.config) as f:
         config = json.load(f)
-    if args.testcases_dir != "":
-        config["testcases_dir"] = args.testcases_dir
-    if args.bash_dir != "":
-        config["bash_dir"] = args.bash_dir
-    if args.phases != "":
-        config["phases"] = [phase.strip() for phase in args.phases.split(",")]
 
+    # replace \r\n with \n
     for name in ["build.bash", "semantic.bash", "codegen.bash", "optim.bash"]:
         src = os.path.join(config["bash_dir"], name)
         if not os.path.isfile(src):
@@ -50,32 +35,36 @@ def main():
         dst = os.path.join(config["bash_dir"], "__" + name)
         replace_newlines(dst, src)
 
+    # build
     print("building...", end=' ')
     sys.stdout.flush()
     res = subprocess.run(
         ["bash", os.path.join(config["bash_dir"], "__build.bash")],
-        stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        universal_newlines=True,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
     if res.returncode != 0:
         print("Failed.")
-        print(str(res.stderr))
+        assert type(res.stderr) == str
+        print(res.stderr)
         return
     print("Passed.")
 
+    # test
     cases = [t for t in testcase.read_testcases(config['testcases_dir'])
              if t.phase in config['phases']]
     cases.sort(key=lambda x: x.filename)
     cases_failed = []
+
     print(str(len(cases)) + " testcases")
     pass_num = 0
     test_num = 0
     for test in cases:
         print("running " + test.filename + "...", end=" ")
         sys.stdout.flush()
-        phase = test.phase.partition(" ")[0]
+        phase = test.phase.split()[0]
         if phase == "codegen":
-            res = codegen_test.test(
-                test, os.path.join(config["bash_dir"], "__codegen.bash"),
-                config["ir_interpreter"])
+            res = codegen_test.test(test, config)
         elif phase == "semantic":
             res = semantic_test.test(
                 test, os.path.join(config["bash_dir"], "__semantic.bash"))
@@ -83,8 +72,8 @@ def main():
             res = codegen_test.test(
                 test, os.path.join(config["bash_dir"], "__optim.bash"))
         else:
-            print(phase + " is unsupported currently")
-            continue
+            assert False
+
         test_num += 1
         if res[0]:
             pass_num += 1
