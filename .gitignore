@@ -1,6 +1,6 @@
 .vscode/
-cases/special/
-cases/tmp/
+
+cases/
 
 *.debug
 *.data
