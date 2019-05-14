@@ -1,0 +1,35 @@
+int f(){
+	for (;;) int a = 1;
+	return a;
+}
+
+int g(){
+	while(true) int b = 1;
+	return b;
+}
+int main(){
+	return 0;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+Test var declaration-scope-1-5140519064-youyurong.mx
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

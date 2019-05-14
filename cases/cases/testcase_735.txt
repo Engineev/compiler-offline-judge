@@ -1,0 +1,30 @@
+int[] f() {
+    return new int[20];
+}
+
+int main() {
+    f() = new int[16];
+}
+
+
+
+/*!! metadata:
+=== comment ===
+test lvalue-asiop-5-5100379071-puyouer.mx
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

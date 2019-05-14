@@ -1,0 +1,25 @@
+int main()
+{
+	int a;
+	{
+		string a;
+		a = 1;
+		a = "wow";
+	}
+	a = "f";
+	return 0;
+}
+
+
+/*!! metadata:
+=== comment ===
+5140309234-xietiancheng/typeCheck1.txt
+=== assert ===
+failure_compile
+=== phase ===
+semantic pretest
+=== is_public ===
+True
+
+!!*/
+

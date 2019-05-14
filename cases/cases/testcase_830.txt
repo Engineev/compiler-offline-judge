@@ -1,0 +1,57 @@
+int main() {
+    if (vvvvvv()) { }
+    else {
+        int i = vvwvvv();
+        for ( ; !vvvvvv() && vvvvvv() || vvvvvv(); i < vvwvvv()) {
+            println("hahaha");
+        }
+        vvvvwv();
+    }
+    return (vwvvvv() + toString(vvwvvv())).parseInt();
+}
+
+bool vvvvvv() {
+    if (vwvvvv() >= vwvvvv() && vwvvvv() <= vwvvvv()) {
+        return toString(vvwvvv()) == vwvvvv();
+    }
+    return vwvvvv() != vwvvvv();
+}
+
+void vvvvwv() {
+    int tmp = vvwvvv();
+    if ((vvwvvv() ^ vwvvvv().parseInt()) > -(++tmp) || (vvvvvv() == (vwvvvv() + vwvvvv() >= vwvvvv()))) {
+        for ( ; ; ) {
+            break;
+        }
+    }
+    return;
+}
+
+string vwvvvv() {
+    return getString();
+}
+
+int vvwvvv() {
+    return vwvvvv().parseInt() % vwvvvv().parseInt();
+}
+
+/*!! metadata:
+=== comment ===
+刘予希 liuyuxi-success_compile
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

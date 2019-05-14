@@ -1,0 +1,27 @@
+int main() {
+    int x = 10;
+    if (x == 10) x = 20;
+    else x = 30;
+    return x;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+ssa1.mx
+=== assert ===
+exitcode
+=== timeout ===
+0.1
+=== input ===
+
+=== phase ===
+codegen pretest
+=== is_public ===
+True
+=== exitcode ===
+20
+
+!!*/
+

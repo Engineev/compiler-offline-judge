@@ -1,0 +1,28 @@
+int main() {
+    int[] a;
+    int[] b = new int[10];
+    int[][] c = new int [2][];
+    return 0;
+}
+
+
+
+
+/*!! metadata:
+=== comment ===
+array1.mx
+=== assert ===
+exitcode
+=== timeout ===
+0.1
+=== input ===
+
+=== phase ===
+codegen pretest
+=== is_public ===
+True
+=== exitcode ===
+0
+
+!!*/
+

@@ -1,0 +1,29 @@
+class A{
+	int a;
+}
+A a;
+int main() {
+    A b = new a();
+	return 0;
+}
+
+/*!! metadata:
+=== comment ===
+李江贝 AimAlex test new
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

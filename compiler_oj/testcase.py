@@ -2,7 +2,7 @@ import os
 
 
 class TestCase:
-    def __init__(self, raw, filename="unknown"):
+    def __init__(self, raw, filename="unknown", t=1.0):
         self.__raw = raw
         self.filename = filename
         self.src = self.__read_source()
@@ -11,7 +11,11 @@ class TestCase:
         self.output = self.__format_output(self.__find_block("output"))
         self.assertion = self.__find_block("assert")
         self.timeout = self.__find_block("timeout")
-        self.timeout = float(self.timeout) if self.timeout != "" else None
+        if self.timeout != "":
+            self.timeout = float(self.timeout) 
+        else:
+            self.timeout = 10.0
+        self.timeout /= t # Continue for t seconds 续一秒!!
         self.exitcode = self.__find_block("exitcode")
         self.exitcode = int(self.exitcode) if self.exitcode != "" else None
         self.phase = self.__find_block("phase")
@@ -38,15 +42,23 @@ class TestCase:
         return self.__raw[beg:end].strip()
 
 
-def read_testcases(dir):
+def read_testcases(dirs, t):
     testcases = []
 
-    names = os.listdir(dir)
-    for name in names:
-        __, extension = os.path.splitext(name)
-        if extension != ".txt":
-            continue
-        with open(os.path.join(dir, name)) as f:
-            raw = f.read()
-            testcases.append(TestCase(raw, name))
+    for dir in dirs:
+        names = os.listdir(dir)
+        print(dir + " : " +  str(len(names)))
+        for name in names:
+            __, extension = os.path.splitext(name)
+
+            if extension != ".txt" and extension != ".mx":
+                # print(extension)
+                continue
+
+            with open(os.path.join(dir, name)) as f:
+                raw = f.read()
+                testcases.append(TestCase(raw, name, t))
+
+    print("testcases at all: " + str(len(testcases)))
+    # print([i.phase for i in testcases])
     return testcases

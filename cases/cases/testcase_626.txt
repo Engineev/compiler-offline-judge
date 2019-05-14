@@ -1,0 +1,38 @@
+int main()
+{
+    string s;
+    int a;
+    for (a = 1; a < 2 << 2; ++a)
+    {
+	//Duplicated name test
+	string s;
+	int p = 2;
+	//Dynamic array test
+	int[][] dynamic_array = new int[a][a];
+    }
+    //Single varible expression test
+    s;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+Single varible expression test-strange-but-correct-515030910450-lusidi.txt
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic extended
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

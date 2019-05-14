@@ -1,0 +1,24 @@
+int main(){
+    void[] a;
+}
+
+/*!! metadata:
+=== comment ===
+李怿铠 Array of VOID for TypeNode base check.
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+1
+
+!!*/
+

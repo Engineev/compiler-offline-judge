@@ -1,0 +1,25 @@
+class A{A a;void f(A t){this=t;}}
+int main(){
+  return 0;
+}
+
+/*!! metadata:
+=== comment ===
+谢杰 this cannot be assigned
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

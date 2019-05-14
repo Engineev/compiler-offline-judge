@@ -1,0 +1,33 @@
+int main() 
+{
+	
+int [][] b = new int[3][4];
+	
+int c = 10;
+	
+b = c;
+
+return 0;
+}
+
+
+/*!! metadata:
+=== comment ===
+汪陶磊 
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

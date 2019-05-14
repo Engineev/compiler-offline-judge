@@ -1,0 +1,27 @@
+int main()
+{
+    int[][][] a = new int[3][2][1];
+    int[][] b = new int[2][1];
+    a = b;
+}
+
+/*!! metadata:
+=== comment ===
+516030910575 Test assignment between different dimension array
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic extended
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

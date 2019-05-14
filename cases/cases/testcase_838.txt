@@ -1,0 +1,22 @@
+A
+
+/*!! metadata:
+=== comment ===
+ 
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

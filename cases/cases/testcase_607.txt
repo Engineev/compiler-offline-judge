@@ -1,0 +1,26 @@
+void AA() {}
+class B {}
+int main() {
+	int A;
+	B C = new B;
+	AA();
+	A = 10;
+	int B;
+}
+
+
+
+
+
+/*!! metadata:
+=== comment ===
+noname-515030910627-fangbohui.txt
+=== assert ===
+success_compile
+=== phase ===
+semantic extended
+=== is_public ===
+True
+
+!!*/
+

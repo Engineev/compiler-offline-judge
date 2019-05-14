@@ -1,0 +1,33 @@
+int a;
+
+class b{
+    int b() {
+        this.a = a;
+    }
+    int a;
+}
+
+int main(){
+    return 0;
+}
+
+/*!! metadata:
+=== comment ===
+徐子昊 test constructor type
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+1
+
+!!*/
+

@@ -1,0 +1,29 @@
+int[] a = new int[4];
+int main()
+{
+    int[] b = new int[4];
+    a=b;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+Test arrary
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

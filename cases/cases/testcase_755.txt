@@ -1,0 +1,41 @@
+class A {
+  B t;
+  A() {
+    t = new B();
+  }
+}
+
+class B {
+  A t;
+  B() {
+    t = new A();
+  }
+}
+
+int main() {
+  A a = new A;
+  B b = new B;
+  a.t = b;
+  b.t = a;
+}
+
+/*!! metadata:
+=== comment ===
+金之涵 516030910578-Zhihan Jin
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

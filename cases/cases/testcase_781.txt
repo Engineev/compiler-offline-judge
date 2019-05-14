@@ -1,0 +1,30 @@
+class Array{
+    int size(){
+    }
+}
+
+int main(){
+    Array a = null;
+    a.size();
+}
+
+/*!! metadata:
+=== comment ===
+李怿铠 Test conflict between Built-in Function & Class.Function
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

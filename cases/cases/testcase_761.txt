@@ -1,0 +1,30 @@
+int main() {
+    
+    int[][] graph = new int[3][];
+    graph[0] = null;
+    graph[1] = new int[10];
+    graph[2] = new int[30];
+    graph[2][0] = null; // null cannot be assigned to primitive type variable
+    return 0;
+}
+
+/*!! metadata:
+=== comment ===
+谢雨桐 
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

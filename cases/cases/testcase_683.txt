@@ -1,0 +1,28 @@
+int main() {
+    string institute = "zhiyuan";
+    for (; institute; ) {
+    }
+}
+
+
+
+/*!! metadata:
+=== comment ===
+Test condition in for loop-ctrflow-5-5120309049-liaochao.mx
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+1
+
+!!*/
+

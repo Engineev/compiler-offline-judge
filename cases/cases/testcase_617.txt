@@ -1,0 +1,19 @@
+int f()
+{
+	println("No main function.");
+	return 0;
+}
+
+
+/*!! metadata:
+=== comment ===
+5140309234-xietiancheng/empty1.txt
+=== assert ===
+failure_compile
+=== phase ===
+semantic pretest
+=== is_public ===
+True
+
+!!*/
+

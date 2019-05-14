@@ -1,0 +1,27 @@
+int main()
+    int [] idiot = new int [3]
+    "I think I forget some thing...;
+    print("but it seems to be all right")
+}
+
+
+/*!! metadata:
+=== comment ===
+肖云轩 XiaoYunxuan - test your parser...
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

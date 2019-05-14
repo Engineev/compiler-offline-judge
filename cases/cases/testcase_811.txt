@@ -1,0 +1,26 @@
+class A{
+}
+int main(){
+A a = new B();
+}
+
+/*!! metadata:
+=== comment ===
+巫宇威 test new expr by constructor func which has not been defined
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

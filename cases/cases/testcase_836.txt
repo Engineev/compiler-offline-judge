@@ -1,0 +1,28 @@
+int main()
+{
+    int a;
+    ++(((++(((++(++a))++)++))++)++);
+    ++a++;
+    return 0;
+}
+
+/*!! metadata:
+=== comment ===
+林耘丰 516021910226-test invalid left value operation
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

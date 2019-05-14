@@ -1,0 +1,26 @@
+int main()
+{
+	return this;
+}
+
+
+/*!! metadata:
+=== comment ===
+段宇轩 No.1 of THIS三连 by Duan
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+1
+
+!!*/
+

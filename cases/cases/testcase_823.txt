@@ -1,0 +1,29 @@
+int main() 
+{
+	int [][] b = new int[3][4];
+	int [] c = new int[10];
+	b = c;
+	return 0;
+}
+
+
+/*!! metadata:
+=== comment ===
+闫鸿宇 test assign with jagged array
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

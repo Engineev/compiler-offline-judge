@@ -1,0 +1,39 @@
+class A {
+    int x;
+    int y;
+    int z;
+}
+
+A f() {
+    int a;
+    a = 1;
+}
+
+int main() {
+    A a;
+    a();
+    return 0;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+Test function-3-5100379071-puyouer.mx
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

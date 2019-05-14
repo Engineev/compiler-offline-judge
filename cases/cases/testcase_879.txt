@@ -1,0 +1,39 @@
+int h(int a){
+    if (a == 0 || a == 1) return 1;
+    int sum = 0;
+    int i;
+    for (i = 0;i < a;i ++)
+        sum = sum + h(i) * h(a - 1 - i);
+    return sum;
+}
+
+int main(){
+    int a;
+    a=getInt();
+    println(toString(h(a)));
+    return 0;
+}
+
+
+
+
+/*!! metadata:
+=== comment ===
+optim-515030910636-xuzhitian.txt
+=== is_public ===
+True
+=== assert ===
+output
+=== timeout ===
+0.5
+=== input ===
+17
+=== phase ===
+optim pretest
+=== output ===
+129644790
+=== exitcode ===
+
+
+!!*/
+

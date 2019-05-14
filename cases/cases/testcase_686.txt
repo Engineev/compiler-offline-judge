@@ -1,0 +1,37 @@
+class experience {
+    int naive;
+}
+int main() {
+    if (true)
+      if (true)
+         print("hello");
+       else
+         print("bye");
+
+    experience[][] exp = new experience[5][6];
+    string[] vec;
+    int[][] mat = new int[5][6];
+    vec = new string[10];
+}
+
+
+/*!! metadata:
+=== comment ===
+Test new operator-grammar_patch_2.mx
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

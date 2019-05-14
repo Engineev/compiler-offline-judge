@@ -1,0 +1,52 @@
+class A{
+	A(){}
+	B x;
+	string abc;
+	int aabc(int abc) {
+		return abc;
+	}
+}
+
+class B {
+	B(){
+		
+	}
+	void D() {
+
+	}
+	A x;
+	B y;
+	void t() {
+		this.D();
+	}
+}
+
+class f{
+	
+}
+
+int main() {
+	int [  ] ff = new int[1 ];
+	f g;
+	int [  ][  ][ ] fg = new int[4][ ][	];
+	string String;
+	String = toString(getInt());
+	println(toString(String.length()));
+}
+
+
+
+
+/*!! metadata:
+=== comment ===
+noname-515030910635-xunayun.txt
+symbol table
+=== assert ===
+success_compile
+=== phase ===
+semantic extended
+=== is_public ===
+True
+
+!!*/
+

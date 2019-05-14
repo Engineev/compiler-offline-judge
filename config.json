@@ -1,0 +1,14 @@
+{
+    "testcases_dir": [
+        "./cases/special/optim"
+    ],
+    "bash_dir": "../../../",
+    "phases": [
+        "optim pretest",
+        "optim extend",
+        "codegen pretest",
+        "codegen extend"
+    ],
+    "speedup": 1.01,
+    "run": "normal"
+}

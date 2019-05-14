@@ -1,0 +1,30 @@
+int lol (int x) {
+return x + 1;
+}
+
+int c = 123;
+int x = lol(c);
+int main () {
+return x;
+}
+
+/*!! metadata:
+=== comment ===
+周子寒 全局变量用函数初始化
+=== is_public ===
+True
+=== assert ===
+exitcode
+=== timeout ===
+0.1
+=== input ===
+
+=== phase ===
+codegen pretest
+=== output ===
+
+=== exitcode ===
+124
+
+!!*/
+

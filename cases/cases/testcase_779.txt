@@ -1,0 +1,28 @@
+int main(){
+	int x;
+	int i;
+	for (i = (new int[3][])[2]; 1<2; ++x)
+		x = x + 1;
+	return 0;
+}
+
+/*!! metadata:
+=== comment ===
+蒋泽天 for initial expression test
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

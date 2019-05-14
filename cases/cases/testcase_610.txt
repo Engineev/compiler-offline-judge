@@ -1,0 +1,46 @@
+class Cat{
+	void greet(){
+		println("MIAOMIAOMIAO");
+	}
+}
+
+class Lamb{
+	void greet(){
+		println("MIEMIEMIE");
+	}
+}
+
+class Animals{
+	Cat c;
+	Lamb l;
+	void greet(){
+		c.greet();
+		l.greet();
+	}
+}
+
+int main(){
+	Cat cat;
+	cat = new Cat;
+	Lamb lamb;
+	lamb = new Lamb;
+	Animals a = new Animals;
+	a.c = cat;
+	a.l = lamb;
+	a.greet();
+}
+
+
+/*!! metadata:
+=== comment ===
+recursive-5140309194-lihuichen.txt
+Test class and recursive function
+=== assert ===
+success_compile
+=== phase ===
+semantic pretest
+=== is_public ===
+True
+
+!!*/
+

@@ -1,0 +1,38 @@
+int yhy(int yhy){
+	return yhy;
+}
+
+int main() {
+	A c;
+	return yhy(c.b.a.b.a.v[10]);
+}
+class A {
+	int [] v = new int[3];
+	B b;
+}
+class B {
+	A a;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+闫鸿宇 test class member access & function parameter declaration
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

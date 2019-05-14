@@ -1,0 +1,39 @@
+class x
+{
+    int x;
+    x()
+    {
+        x=1;
+    }
+}
+x x(x a)
+{
+    return a;
+}
+int x;
+int main()
+{
+    x a;
+    x(a);
+}
+
+/*!! metadata:
+=== comment ===
+孙雪晖 函数、类、变量重名(比较水，凑数用的..)
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

@@ -1,0 +1,36 @@
+//dot hell
+class A { int a;}
+class B { A b;  }
+class C { B c;  }
+class D { C d;  }
+class E { D e;  }
+class F { E f;  }
+class G { F g;  }
+G world = new G;
+void hello(int world) {
+}
+int main() {
+    hello(world.g.f.e.d.c.b.a);
+    return 0;
+}
+
+/*!! metadata:
+=== comment ===
+刘啸远 dot dot dot...
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

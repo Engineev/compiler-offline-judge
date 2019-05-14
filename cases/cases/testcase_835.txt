@@ -1,0 +1,51 @@
+class A
+{
+    int b;
+    B foo;
+    A f()
+    {
+        return foo.g().foo;
+    }
+}
+
+int main()
+{
+    B foo;
+    foo = (foo.foo.foo).foo.foo.foo.foo.g();
+    foo.foo.f().foo.g().foo.foo.g();
+    foo.foo.foo.(foo).foo.foo.foo.g().foo.b = getString().length();
+    return 0;
+}
+
+class B
+{
+    int a;
+    A foo;
+    B g()
+    {
+        //test left value for increment result
+        (++(++a))++;
+        return foo.f().foo;
+    }
+}
+
+/*!! metadata:
+=== comment ===
+林耘丰 516021910226-test valid member access operation and left value
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

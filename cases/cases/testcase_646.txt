@@ -1,0 +1,22 @@
+class A {
+    void this() {  // "this" is a reserved word
+        return;
+    }
+}
+int main() {}
+
+
+
+/*!! metadata:
+=== comment ===
+test reserved word "this"
+class-6-515030910117-zhenglianmin.mx
+=== assert ===
+failure_compile
+=== phase ===
+semantic extended
+=== is_public ===
+True
+
+!!*/
+

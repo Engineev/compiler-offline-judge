@@ -1,0 +1,27 @@
+void test(){
+  return null;
+}
+int main(){
+  ;
+}
+
+/*!! metadata:
+=== comment ===
+王翰竟 test return null
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+1000
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

@@ -1,0 +1,33 @@
+void haha(){
+	int a;
+	return;
+}
+
+int main() {
+	print("hehe\n");
+	return 0;
+}
+
+
+
+
+/*!! metadata:
+=== comment ===
+Test void return-noname-515030910406-liusiqi.txt
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic extended
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

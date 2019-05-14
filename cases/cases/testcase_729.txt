@@ -1,0 +1,27 @@
+int mai() {
+    string str = "120";
+    int x = str >> 3;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+Test bit operation-1-5120309049-liaochao.mx
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

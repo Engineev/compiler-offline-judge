@@ -1,0 +1,32 @@
+int main()
+{
+
+if(true)
+//return "heiheihei";
+int i = 0;
+i = 1;
+return null;
+}
+//TimerChen
+//Failure Compile
+
+/*!! metadata:
+=== comment ===
+陈竞潇  定义域 return null
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic extended
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

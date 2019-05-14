@@ -1,0 +1,45 @@
+int a = 0;
+
+class A{
+    int f(){
+       b = a; 
+    }
+    int b;
+}
+
+
+int main(){
+    int[  ][  ] graph = new int[3][];    //be careful about the space!
+    graph[0] = null;
+    graph[1] = new int[10];
+    graph[2] = new int[30];
+    
+    int i = 0;
+    for ((i == 1)&& true;;){
+        break;
+    }
+    return 0;
+}
+
+//This is a comment without "\n" at the end of the sentence, may cause a little problem if you don't handle it well.
+
+/*!! metadata:
+=== comment ===
+徐子昊 trifle test
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

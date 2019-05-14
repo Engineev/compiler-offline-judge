@@ -1,0 +1,229 @@
+// > 话说 有人写了跨语句的公共子表达式消除吗
+// < 你在说什么鬼话
+// < 为什么不写点性价比高的优化呢
+
+int hilo(int hi, int lo)
+{
+	return lo | (hi << 16);
+}
+
+int shift_l(int x, int n)
+{
+	return (x << n) & hilo(65535, 65535);	// 0xffff ffff
+}
+
+int shift_r(int x, int n)
+{
+	int tmp = hilo(32767, 65535);	// 0x7fff ffff
+	tmp = ((tmp >> n) << 1) + 1;
+	tmp = tmp & (x >> n);
+	return tmp & hilo(65535, 65535);
+}
+
+int xorshift(int seed)
+{
+	int x = seed;
+
+	x = x ^ shift_l(x, 13);
+	x = x ^ shift_r(x, 17);
+	x = x ^ shift_l(x, 5);
+	
+	return x;
+}
+
+int xorshift10(int seed)
+{
+	int i;
+	int x = seed;
+	
+	x = xorshift(x);
+	x = xorshift(x);
+	x = xorshift(x);
+	x = xorshift(x);
+	x = xorshift(x);
+	x = xorshift(x);
+	x = xorshift(x);
+	x = xorshift(x);
+	x = xorshift(x);
+	x = xorshift(x);
+	
+	return x;
+}
+
+
+string asciiTable = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+string int2chr(int x)
+{
+	if(x >= 32 && x <= 126)
+		return asciiTable.substring(x-32, x-32);
+	return "";
+}
+
+string toStringHex(int x)
+{
+	string ret = "";
+	int i;
+	for(i=28;i>=0;i=i-4)
+	{
+		int digit = (x >> i) & 15;
+		if(digit < 10)
+			ret = ret + int2chr(48+digit);
+		else
+			ret = ret + int2chr(65+digit-10);
+	}
+	return ret;
+}
+
+void assert(bool expression)
+{
+	if(!expression)
+		println("Assertion Failed!");
+}
+
+int main()
+{
+	int seed; 
+	int l; int r;
+	int P;
+	
+	seed = getInt();
+	l = getInt();
+	r = getInt();
+	P = getInt();
+	
+	int i;
+	seed = xorshift10(seed + 1);
+		
+	int INT_MAX = hilo(32767, 65535);
+	
+	int r1 = 0; int r2 = 0; int r3 = 0; int r4 = 0;
+	int d = 0;
+	
+	for(i=l; i<r; i++)
+	{
+		int v1; int v2; int v3; int v4; int v5; int v6;
+		seed = xorshift(seed); v1 = seed & INT_MAX;
+		seed = xorshift(seed); v2 = seed & INT_MAX;
+		seed = xorshift(seed); v3 = seed & INT_MAX;
+		seed = xorshift(seed); v4 = seed & INT_MAX;
+		seed = xorshift(seed); v5 = seed & INT_MAX;
+		seed = xorshift(seed); v6 = seed & INT_MAX;
+		
+		////////////////////////////////////////
+		
+		int a1 = v1 ^ v2 ^ v3;
+		a1 = a1 ^ (v4 ^ v5 ^ v6);
+		a1 = a1 & INT_MAX;
+		
+		int a2 = v1 + v2 + v3 + 1;
+		a2 = a2 - (v4 + v5 + v6);
+		a2 = a2 & INT_MAX;
+		
+		int a3 = (v1 % P) * (v2 % P) * (v3 % P);
+		a3 = a3 * (v4 % P) * (v5 % P) * (v6 % P);
+		a3 = a3 & INT_MAX;
+		
+		int a4;
+		if((v1 ^ v2 ^ v3) > (v4 ^ v5 ^ v6))
+			a4 = (((v1 + v2) & INT_MAX) % P) % (v3 % P + 1);
+		else
+			a4 = (((v3 + v2) & INT_MAX) % P) % (v1 % P + 1);
+		
+		r1 = r1 + xorshift10(a1 ^ 10001);
+		r2 = r2 + xorshift10(a2 ^ 10002);
+		r3 = r3 + xorshift10(a3 ^ 10003);
+		r4 = r4 + xorshift10(a4 ^ 10004);
+		
+		////////////////////////////////////////
+		
+		int b1 = v4 ^ v2 ^ v3;
+		b1 = b1 ^ v1 ^ v6 ^ v5;
+		b1 = b1 & INT_MAX;
+		
+		int b2 = -v4 + v2 + v3;
+		b2 = b2 + v1 - v6 - v5 + 1;
+		b2 = b2 & INT_MAX;
+		
+		int b3 = (v4 % P) * (v2 % P) * (v3 % P);
+		b3 = b3 * (v1 % P) * (v6 % P) * (v5 % P);
+		b3 = b3 & INT_MAX;
+		
+		int b4;
+		if((v1 ^ v2 ^ v3) <= (v4 ^ v5 ^ v6))
+			b4 = (((v3 + v2) & INT_MAX) % P) % (v1 % P + 1);
+		else
+			b4 = (((v1 + v2) & INT_MAX) % P) % (v3 % P + 1);
+		
+		r1 = r1 + xorshift10(b1 ^ 10001);
+		r2 = r2 + xorshift10(b2 ^ 10002);
+		r3 = r3 + xorshift10(b3 ^ 10003);
+		r4 = r4 + xorshift10(b4 ^ 10004);
+		
+		//assert(a1 == b1 && a2 == b2 && a3 == b3 && a4 == b4);
+		
+		////////////////////////////////////////
+
+		int c1 = v4 ^ v1 ^ v3;
+		c1 = c1 ^ v2 ^ v6 ^ v5;
+		c1 = c1 & INT_MAX;
+		
+		int c2 = v4 - v2 + (-v3);
+		c2 = c2 - v1 + v6 + v5 - 1;
+		c2 = (-c2) & INT_MAX;
+		
+		int c3 = (v4 % P) * (v5 % P) * (v6 % P);
+		c3 = c3 * (v1 % P) * (v2 % P) * (v3 % P);
+		c3 = c3 & INT_MAX;
+		
+		int c4;
+		if((v4 ^ v5 ^ v6) < (v3 ^ v2 ^ v1))
+			c4 = (((v1 + v2) & INT_MAX) % P) % (v3 % P + 1);
+		else
+			c4 = (((v3 + v2) & INT_MAX) % P) % (v1 % P + 1);
+		
+		r1 = r1 + xorshift10(c1 ^ 10001);
+		r2 = r2 + xorshift10(c2 ^ 10002);
+		r3 = r3 + xorshift10(c3 ^ 10003);
+		r4 = r4 + xorshift10(c4 ^ 10004);
+		
+		//assert(a1 == c1 && a2 == c2 && a3 == c3 && a4 == c4);
+		
+		// println("a1=" + toString(a1) + ", a2=" + toString(a2) + ", a3=" + toString(a3) + ", a4=" + toString(a4));
+		// println("b1=" + toString(b1) + ", b2=" + toString(b2) + ", b3=" + toString(b3) + ", b4=" + toString(b4));
+		// println("c1=" + toString(c1) + ", c2=" + toString(c2) + ", c3=" + toString(c3) + ", c4=" + toString(c4));
+
+	}
+	
+	print(toStringHex(r1) + " ");
+	print(toStringHex(r2) + " ");
+	print(toStringHex(r3) + " ");
+	print(toStringHex(r4) + " ");
+	println("");
+	
+	return 0;
+}
+
+/*!! metadata:
+=== comment ===
+ Testcase for Common Subexpression Elimination (Global Value Numbering is recommended)
+=== is_public ===
+True
+=== assert ===
+output
+=== timeout ===
+10.0
+=== input ===
+10086
+0 3000000
+65537
+
+=== phase ===
+optim extended
+=== output ===
+D008B9F5 A2899DA6 BEEF7FEA EF74C135
+
+=== exitcode ===
+0
+
+!!*/
+

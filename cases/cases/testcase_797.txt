@@ -1,0 +1,44 @@
+// function in function
+// null as para
+int too(int young) {
+    return young;
+}
+int young(int too) {
+    return too;
+}
+int simple(sometimes naive) {
+    return 1926;
+}
+class sometimes {
+	int naive;
+	void make_money() {
+		this.naive++;
+	}
+}
+int main() {
+    sometimes naive = null;
+    print(toString(
+        too(young(too(simple(naive))))
+    ));
+}
+
+/*!! metadata:
+=== comment ===
+刘啸远 function in function, null as parameter
+=== is_public ===
+True
+=== assert ===
+success_compile
+=== timeout ===
+0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+0
+
+!!*/
+

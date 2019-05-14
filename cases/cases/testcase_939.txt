@@ -1,0 +1,82 @@
+int hilo(int hi, int lo)
+{
+	return lo | (hi << 16);
+}
+
+int shift_l(int x, int n)
+{
+    return (x << n) & hilo(32767, 65535);	// 0x7fff ffff
+}
+
+int shift_r(int x, int n)
+{
+	return ((((hilo(32767, 65536) >> n) << 1 + 1) + 1) & (x >> n)) & hilo(32767, 65535);
+}
+
+int xorshift(int seed, int num)
+{
+	int x = seed + 1;
+	int i;
+	
+	for(i=0; i<num * 10; i++)
+	{
+		x = x ^ shift_l(x, 13);
+		x = x ^ shift_r(x, 17);
+		x = x ^ shift_l(x, 5);
+	}
+	
+	return x ^ 123456789;
+}
+
+
+int main() {
+	int n = getInt();
+	int i; int j; int k;
+	int [][] f = new int[n][n];
+	for (i = 0; i < n; ++i) {
+		for (j = 0; j < n; ++j) {
+			for (k = 0; k < n; ++k) {
+				if (i > 0 && j > 0 && k > 0) 
+				{
+					if (i % j != j % k && j % k != k % i && i % j != k % i)
+					{
+						f[i][j] = xorshift(i & j & k, i + j + k);
+					}
+				}
+			}
+		}
+	}
+	int sum = 0;
+	for (i = 0; i < n; ++i) {
+		for (j = 0; j < n; ++j) {
+			for (k = 0; k < n; ++k) {
+				if (i >= j && j >= k) {
+					sum = (sum + f[i][j]) & ((1 << 30) - 1);
+				}
+			}
+		}
+	}
+	println("Ans is " + toString(sum));
+    return 0;
+}
+
+/*!! metadata:
+=== comment ===
+王天哲 Test for register allocate, function inline // 516030910591
+=== is_public ===
+True
+=== assert ===
+output
+=== timeout ===
+10.0
+=== input ===
+80
+=== phase ===
+optim extended
+=== output ===
+Ans is 915763225
+=== exitcode ===
+0
+
+!!*/
+

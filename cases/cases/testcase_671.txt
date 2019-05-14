@@ -1,0 +1,24 @@
+void main() {}
+
+
+
+/*!! metadata:
+=== comment ===
+Test main-func-7-5140309552-wancheng.mx
+=== is_public ===
+True
+=== assert ===
+failure_compile
+=== timeout ===
+0.0
+=== input ===
+
+=== phase ===
+semantic pretest
+=== output ===
+
+=== exitcode ===
+
+
+!!*/
+

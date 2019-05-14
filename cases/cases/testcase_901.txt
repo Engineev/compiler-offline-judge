@@ -1,0 +1,31 @@
+int x;
+int y;
+int main() {
+    x = 10;
+    y = 20;
+    int c = x+y;
+    return c;
+}
+
+
+
+/*!! metadata:
+=== comment ===
+global1.mx
+=== is_public ===
+True
+=== assert ===
+exitcode
+=== timeout ===
+0.1
+=== input ===
+
+=== phase ===
+codegen pretest
+=== output ===
+
+=== exitcode ===
+30
+
+!!*/
+
