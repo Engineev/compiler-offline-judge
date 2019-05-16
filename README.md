@@ -2,6 +2,44 @@
 
 The offline version of acm-compiler-judge.
 
+
+## Change Note
+
+### Warn: Do not delete key of config.json
+
+### add order in config.json
+
+### robuster
+> `shuffle`: means run without check timeout with selected data sets with codegen and optim.bash
+eg: sel `optim extend` and `shuffle` will run both codegen and optim on `optim extend` set.
+> `normal`(default): means run specific tests with specific data sets
+eg: sel `optim extend` `codegen extend` and `normal` will run codegen on `codegen extend` and optim on `optim extend` set.
+
+> `codegen`: checkout codegen rightness(timeout*5) with all files
+
+### speedup for powerful compiler
+> set speed for your test to get high scores
+
+> add function to output run-time
+
+### Add cmp function to Compare with last run
+
+### Add Dump output in `codegen` when output not matched
+
+### if debug -> no flush of last data
+
+### remove `__*.bash` like temp files
+
+> to avoid produce files if build failed
+
+> add color with build failed
+
+> add clear cache function with build failed
+
+### support more src-test folders
+
+### 
+
 ## Requirement
 
 * python3 (version >= 3.5)
